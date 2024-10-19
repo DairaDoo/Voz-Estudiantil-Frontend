@@ -1,7 +1,10 @@
 # Voz Estudiantil
 
 <!-- ![Logo de Voz Estudiantil](ruta/a/tu/logo.png)  <!-- Opcional: Agrega un logo -->
-![Gato programando](https://media.tenor.com/yQ6QlIyJf-EAAAAM/cats-computer.gif)
+![Logo de Voz Estudiantil](ruta/a/tu/logo.png)  <!-- Opcional: Agrega un logo -->
+<p align="center">
+  <img src="https://media.tenor.com/yQ6QlIyJf-EAAAAM/cats-computer.gif" alt="Gato programando">
+</p>
 
 ## 📚 Descripción
 
