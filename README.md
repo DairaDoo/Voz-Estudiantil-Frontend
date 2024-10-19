@@ -30,4 +30,4 @@ Proporcionar un espacio donde los estudiantes puedan expresar inquietudes y cont
 
 ---
 
-¡Únete a nosotros y sé parte de esta transformación en la experiencia universitaria!
+¡Gracias por apoyar este proyecto!
