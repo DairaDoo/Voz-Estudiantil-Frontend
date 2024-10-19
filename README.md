@@ -8,7 +8,7 @@
 
 ## 📚 Descripción
 
-**Voz Estudiantil** es una plataforma en desarrollo que permite a los estudiantes compartir sus experiencias sobre las condiciones de su universidad de forma segura y anónima. Nuestro objetivo es fomentar la transparencia y la colaboración en el entorno académico.
+**Voz Estudiantil** es una plataforma en desarrollo que permite a los estudiantes compartir imagenes y opiniones sobre las condiciones de su universidad de forma segura y anónima. Nuestro objetivo es fomentar la transparencia y la colaboración en el entorno académico.
 
 ## 🌟 Propósito
 
