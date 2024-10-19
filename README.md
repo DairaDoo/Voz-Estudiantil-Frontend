@@ -1,4 +1,4 @@
-# Voz Estudiantil
+<h1 align="center">Voz Estudiantil</h1>
 
 <!-- ![Logo de Voz Estudiantil](ruta/a/tu/logo.png)  <!-- Opcional: Agrega un logo -->
 ![Logo de Voz Estudiantil](ruta/a/tu/logo.png)  <!-- Opcional: Agrega un logo -->
