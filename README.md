@@ -3,7 +3,7 @@
 <!-- ![Logo de Voz Estudiantil](ruta/a/tu/logo.png)  <!-- Opcional: Agrega un logo -->
 ![Logo de Voz Estudiantil](ruta/a/tu/logo.png)  <!-- Opcional: Agrega un logo -->
 <p align="center">
-  <img src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/045/633/original/Coding_Cat.gif?1662445143" alt="Gato programando" height=20px width=20px>
+  <img src="https://s3.amazonaws.com/shecodesio-production/uploads/files/000/045/633/original/Coding_Cat.gif?1662445143" alt="Gato programando" height=70px width=70px>
 </p>
 
 ## 📚 Descripción
