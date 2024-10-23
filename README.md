@@ -1,4 +1,4 @@
-<h1 align="center">Voz Estudiantil</h1>
+<h1 align="center">Voz Estudiantil Frontend</h1>
 
 <p align="left" style="margin-left: 20px; margin-top: -20px;">
   <img src="https://res.cloudinary.com/dcldzjq9s/image/upload/v1729701349/d4mmoeti5eteyge5rrew.png" alt="Logo de Voz Estudiantil" width="150px"/> <!-- Ajusta el tamaño según lo necesites -->
