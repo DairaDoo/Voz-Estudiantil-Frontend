@@ -3,6 +3,7 @@ import React from 'react';
 import CustomNavbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import styles from './Layout.module.css'; // Importa como un objeto
+import TestingNavbar from '../Navbar/Navbar';
 
 
 // El componente Layout es donde ponen el contenido que quieren
@@ -12,7 +13,7 @@ import styles from './Layout.module.css'; // Importa como un objeto
 const Layout = ({ children }) => (
   <div className={`d-flex flex-column min-vh-100 ${styles.layout}`}> {/* Clase flexbox de Bootstrap */}
     {/* este es el navbar */}
-    <CustomNavbar /> 
+    <TestingNavbar /> 
     <main className="flex-grow-1"> {/* Clase para crecer y ocupar el espacio disponible */}
       {children}
     </main>

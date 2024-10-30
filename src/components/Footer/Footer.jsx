@@ -4,7 +4,7 @@ import styles from './Footer.module.css'; // Importa como un objeto
 
 const Footer = () => (
   <footer className={styles.footer}>
-    <p>&copy; {new Date().getFullYear()} MyApp. All rights reserved.</p>
+    <p>&copy; {new Date().getFullYear()} Voz Estudiantil </p>
   </footer>
 );
 
