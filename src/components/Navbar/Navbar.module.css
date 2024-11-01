@@ -1,0 +1,34 @@
+/* src/components/Navbar/Navbar.module.css */
+.navbarBrand {
+display: flex;
+align-items: center;
+}
+
+.logo {
+width: 50px;
+margin-right: 8px;
+}
+
+.searchBar {
+max-width: 400px;
+border: 2px solid #343a40;
+border-radius: 4px;
+}
+
+.searchIcon {
+background-color: #f8f9fa;
+border-right: 1px solid #343a40;
+}
+
+.buttonGroup {
+border: 2px solid #343a40;
+border-radius: 4px;
+}
+
+.mobileContainer {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+margin-top: 12px;
+}
