@@ -38,7 +38,7 @@ const TestingNavbar = () => {
               </div>
               <input type="text" className="form-control border-0" placeholder="Search" />
             </div>
-            <div className="d-flex justify-content-around w-100">
+            <div className="d-flex justify-content-around w-100 pt-2">
               <button className={`btn btn-info ${styles.buttonGroup}`}>Log In</button>
               <button className={`btn btn-info ${styles.buttonGroup}`}>Sign Up</button>
             </div>

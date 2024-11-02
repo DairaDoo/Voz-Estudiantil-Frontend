@@ -10,7 +10,7 @@ margin-right: 8px;
 }
 
 .searchBar {
-max-width: 400px;
+max-width: 420px;
 border: 2px solid #343a40;
 border-radius: 4px;
 }
@@ -21,9 +21,11 @@ border-right: 1px solid #343a40;
 }
 
 .buttonGroup {
-border: 2px solid #343a40;
-border-radius: 4px;
+    border: 2px solid #343a40 !important;
+    border-radius: 4px !important;
+
 }
+  
 
 .mobileContainer {
 display: flex;
