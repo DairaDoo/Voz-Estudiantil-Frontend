@@ -1,50 +1,58 @@
 import React from 'react';
-import { Navbar, Container } from 'react-bootstrap';
+import { Navbar, FormControl, Button, InputGroup } from 'react-bootstrap';
 import styles from './Navbar.module.css';
 import logo_img from '/voz-estudiantil-proyecto/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png';
 
-const TestingNavbar = () => {
+function CustomNavbar() {
   return (
-    <Navbar bg="light" expand="lg" className="p-3">
-      <Container fluid>
-        {/* Logo y Nombre */}
-        <Navbar.Brand className={styles.navbarBrand}>
-          <img src={logo_img} alt="Logo" className={styles.logo} />
-          <span className="h2 m-0 d-none d-lg-inline">VozEstudiantil</span>
-        </Navbar.Brand>
+    <Navbar expand="lg" bg="light" variant="light" className="px-3">
+      <Navbar.Brand href="#" className="d-flex align-items-center">
+        <img
+          src={logo_img}
+          alt="Logo"
+          className="d-inline-block align-top"
+          style={{ width: '50px', marginRight: '8px' }}
+        />
+        <span className="d-none d-lg-inline h2">Voz Estudiantil</span>
+      </Navbar.Brand>
 
-        {/* Barra de búsqueda siempre visible */}
-        <div className={`${styles.searchBar} input-group mx-auto`}>
-          <div className="input-group-prepend">
-            <span className={`${styles.searchIcon} input-group-text border-0`}>
-              <i className="bi bi-search"></i>
-            </span>
-          </div>
-          <input type="text" className="form-control border-0" placeholder="Search" />
+      <div className={`flex-grow-1 d-flex justify-content-center ${styles.searchContainer}`}>
+        <InputGroup className="w-100">
+          <InputGroup.Text className="border-0">
+            <i className="bi bi-search" style={{ fontSize: '1rem' }}></i>
+          </InputGroup.Text>
+          <FormControl
+            type="search"
+            placeholder="Buscar"
+            className="border-start-0"
+            aria-label="Search"
+          />
+        </InputGroup>
+      </div>
+
+      <Navbar.Toggle aria-controls="navbarResponsive" className="mb-0" />
+
+      <Navbar.Collapse id="navbarResponsive" className="justify-content-end">
+        <div className={`d-none d-lg-flex ${styles.desktopButtons}`}>
+          <Button variant="outline-primary" className="me-2">
+            Login
+          </Button>
+          <Button variant="primary">
+            Signup
+          </Button>
         </div>
 
-        {/* Botón de menú para móviles */}
-        <Navbar.Toggle aria-controls="navbarResponsive" />
-
-        {/* Contenido colapsable (Login y Signup) */}
-        <Navbar.Collapse id="navbarResponsive" className="justify-content-end">
-          {/* Botones solo visibles en escritorio */}
-          <div className="d-none d-lg-flex align-items-center">
-            <button className={`btn btn-info mx-2 ${styles.buttonGroup}`}>Log In</button>
-            <button className={`btn btn-info ${styles.buttonGroup}`}>Sign Up</button>
-          </div>
-
-          {/* Dropdown solo para móviles */}
-          <div className={`${styles.mobileContainer} d-flex d-lg-none`}>
-            <div className="d-flex justify-content-around w-100 pt-2">
-              <button className={`btn btn-info ${styles.buttonGroup}`}>Log In</button>
-              <button className={`btn btn-info ${styles.buttonGroup}`}>Sign Up</button>
-            </div>
-          </div>
-        </Navbar.Collapse>
-      </Container>
+        <div className={`d-lg-none d-flex flex-column align-items-center p-3 ${styles.mobileButtons}`}>
+          <Button variant="outline-primary" className={`mb-2 ${styles.mobileButton}`}>
+            Login
+          </Button>
+          <Button variant="primary" className={styles.mobileButton}>
+            Signup
+          </Button>
+        </div>
+      </Navbar.Collapse>
     </Navbar>
   );
-};
+}
 
-export default TestingNavbar;
+export default CustomNavbar;
