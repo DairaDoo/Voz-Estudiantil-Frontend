@@ -1,0 +1,7 @@
+/* src/components/Layout/Layout.module.css */
+.footer {
+  background-color: #343a40; /* Color de fondo del footer */
+  color: white;              /* Color del texto */
+  padding: 1rem 0;          /* Espaciado vertical */
+  text-align: center;        /* Centrar el texto */
+}
