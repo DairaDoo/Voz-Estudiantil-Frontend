@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import logo from '/VozEstudiantil_FrontEnd/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png'; // Importa la imagen del logo
+import { Link } from 'react-router-dom'; // Importamos Link para redirigir a otras páginas
+import logo from '/voz-estudiantil-proyecto/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png'; // Importa la imagen del logo
 import './Login.module.css';
-
 
 function LoginPage() {
     const [username, setUsername] = useState('');
@@ -18,9 +18,16 @@ function LoginPage() {
             {/* Logo y Nombre de la Aplicación en la esquina superior izquierda */}
             <div className="position-absolute top-0 start-0 p-3">
                 <div className="d-flex align-items-center">
-                    <img src={logo} alt="Logo" className="logo me-2"           style={{ width: '50px', marginRight: '8px' }} // Estilos en línea para ajustar el tamaño y margen de la imagen.
-                    />
-                    <h1 className="app-name">Voz Estudiantil</h1>
+                    {/* Usamos Link para hacer que el logo y el nombre redirijan a la página de inicio */}
+                    <Link to="/" className="d-flex align-items-center text-decoration-none">
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            className="logo me-2"
+                            style={{ width: '50px', marginRight: '8px' }} // Conservamos el estilo en línea
+                        />
+                        <h1 className="app-name" style={{ fontSize: '2rem', color: '#000000' }}>Voz Estudiantil</h1> {/* Manteniendo estilo original */}
+                    </Link>
                 </div>
             </div>
 

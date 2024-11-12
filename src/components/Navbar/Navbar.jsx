@@ -1,9 +1,16 @@
 import React from 'react'; // Importamos la biblioteca React para construir el componente.
 import { Navbar, FormControl, Button, InputGroup } from 'react-bootstrap'; // Importamos componentes de Bootstrap que usaremos.
+import { useNavigate } from 'react-router-dom'; // Importamos el hook useNavigate para redirigir al login
 import styles from './Navbar.module.css'; // Importamos estilos personalizados para este componente.
-import logo_img from '/VozEstudiantil_FrontEnd/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png'; // Importamos la imagen del logo.
+import logo_img from '/voz-estudiantil-proyecto/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png'; // Importamos la imagen del logo.
 
 function CustomNavbar() { // Definimos un componente funcional llamado CustomNavbar.
+  const navigate = useNavigate();  // Creamos el hook de navegación
+
+  const handleLoginClick = () => {
+    navigate('/login');  // Redirige al usuario a la página de login
+  };
+
   return (
     <Navbar expand="lg" bg="light" variant="light" className="px-3"> {/* Creamos el Navbar con opciones de expansión y estilo. */}
       <Navbar.Brand href="#" className="d-flex align-items-center"> {/* Enlace de marca que contiene el logo y el nombre. */}
@@ -34,7 +41,7 @@ function CustomNavbar() { // Definimos un componente funcional llamado CustomNav
 
       <Navbar.Collapse id="navbarResponsive" className="justify-content-end"> {/* Sección colapsable del Navbar para mostrar botones de inicio de sesión y registro. */}
         <div className={`d-none d-lg-flex ${styles.desktopButtons}`}> {/* Botones que se muestran solo en pantallas grandes. */}
-          <Button variant="outline-primary" className="me-2"> {/* Botón de inicio de sesión con variante de contorno. */}
+          <Button variant="outline-primary" className="me-2" onClick={handleLoginClick}> {/* Botón de inicio de sesión con variante de contorno. */}
             Log In
           </Button>
           <Button variant="primary"> {/* Botón de registro con variante primaria. */}
@@ -43,7 +50,7 @@ function CustomNavbar() { // Definimos un componente funcional llamado CustomNav
         </div>
 
         <div className={`d-lg-none d-flex flex-column align-items-center p-3 ${styles.mobileButtons}`}> {/* Botones que se muestran solo en pantallas pequeñas. */}
-          <Button variant="outline-primary" className={`mb-2 ${styles.mobileButton}`}> {/* Botón de inicio de sesión para móviles. */}
+          <Button variant="outline-primary" className={`mb-2 ${styles.mobileButton}`} onClick={handleLoginClick}> {/* Botón de inicio de sesión para móviles. */}
             Log In
           </Button>
           <Button variant="primary" className={styles.mobileButton}> {/* Botón de registro para móviles. */}
