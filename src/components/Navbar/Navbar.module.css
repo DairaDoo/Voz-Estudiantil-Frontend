@@ -1,96 +1,72 @@
-/* Ajustes generales */
-.navbar {
-padding: 1rem; /* Espaciado interno del Navbar */
-}
-
-.navbar-brand img {
-width: 50px; /* Ancho del logo */
-}
-
-.searchContainer {
-margin-right: 10px; /* Margen a la derecha del contenedor de búsqueda */
-}
-
-/* Alineación de botones en desktop */
-.desktopButtons .btn {
-margin-right: 8px; /* Espaciado entre botones en desktop */
-}
-
-/* Ajustes para dispositivos móviles */
-.mobileButtons .mobileButton {
-width: 80%; /* Mantener un ancho del 80% para centrarlos mejor */
-margin-bottom: 10px; /* Espaciado entre botones */
-background-color: skyblue; /* Color de fondo azul cielo */
-border: 2px solid darkblue; /* Borde oscuro */
-color: black; /* Color de texto negro */
-font-weight: bold; /* Texto en negrita para mayor énfasis */
-border-radius: 5px; /* Bordes redondeados */
-transition: background-color 0.3s, color 0.3s, transform 0.2s; /* Transiciones suaves */
-padding: 10px; /* Padding para mayor área de clic */
-display: flex; /* Usamos flex para centrar el texto dentro del botón */
-justify-content: center; /* Centramos horizontalmente el contenido */
-text-align: center; /* Alineación del texto en el centro */
-}
-
-/* Efecto al pasar el ratón */
-.mobileButtons .mobileButton:hover {
-background-color: darkblue; /* Cambiar a un azul más oscuro al pasar el ratón */
-color: white; /* Cambiar el color del texto a blanco al pasar el ratón */
-}
-
-/* Efecto al hacer clic */
-.mobileButtons .mobileButton:active {
-transform: scale(0.98); /* Efecto de pulsación al hacer clic */
-}
-
-/* Media query específica para pantallas menores a 405px */
-@media (max-width: 416px) {
-.navbar {
-    padding: 0.25rem; /* Reducir el padding del navbar en pantallas pequeñas */
-}
-
-.navbar-brand img {
-    width: 35px; /* Ajustar el tamaño del logo */
-    margin-left: -20px; /* Mover el logo un poco a la izquierda */
-}
-
-.searchContainer {
-    width: 60%; /* Limita el ancho del search bar en pantallas pequeñas */
-    flex-grow: 0; /* Evita que el search bar crezca automáticamente */
-    flex-shrink: 1; /* Permite que el search bar se reduzca si es necesario */
-}
-
-.mobileButtons .mobileButton {
-    width: 90%; /* Ancho de los botones en pantallas pequeñas */
-}
-
-.input-group-text i {
-    font-size: 0.85rem; /* Ajustar el tamaño del ícono de búsqueda */
-}
-}
-
-@media (max-width: 381px) {
-.navbar {
-    padding: 0.25rem; /* Mantener el padding reducido */
-}
-
-.navbar-brand img {
-    width: 30px; /* Reducir el tamaño del logo aún más */
-    margin-left: -20px; 
-}
-
-.searchContainer {
-    width: 50%; /* Reducir más el ancho del search bar */
-    flex-grow: 0;
-    flex-shrink: 1;
-}
-
-.mobileButtons .mobileButton {
-    width: 90%; /* Mantener el ancho del 90% en móviles */
-    font-size: 0.9rem; /* Ajustar el tamaño de los botones */
-}
-
-.input-group-text i {
-    font-size: 0.75rem; /* Ajustar el tamaño del ícono de búsqueda */
-}
-}
+/* Estilos generales para los botones */
+.mobileButton {
+    width: 80% !important;
+    margin-bottom: 5px !important;
+    background-color: #00aaff !important;
+    border: 1.5px  #007bff !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    transition: background-color 0.3s ease, transform 0.2s ease !important;
+    box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.2) !important;
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  
+  /* Efecto hover para móviles y escritorio */
+  .mobileButton:hover {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+    transform: scale(1.03) !important;
+  }
+  
+  /* Efecto de pulsación */
+  .mobileButton:active {
+    transform: scale(0.97) !important;
+  }
+  
+  /* Ajustes en el tamaño solo para la vista de escritorio */
+  @media (min-width: 992px) {
+    .mobileButton {
+      width: auto !important; /* El tamaño de los botones debe ser automático en desktop */
+      padding: 10px 20px !important; /* Ajustar el tamaño del padding en escritorio */
+    }
+  }
+  
+  /* Media query para pantallas menores a 416px */
+  @media (max-width: 416px) {
+    .navbar {
+      padding: 0.25rem;
+    }
+    .navbar-brand img {
+      width: 35px;
+      margin-left: -20px;
+    }
+    .searchContainer {
+      width: 60%;
+    }
+    .mobileButtons .mobileButton {
+      width: 90%;
+    }
+  }
+  
+  /* Media query para pantallas menores a 381px */
+  @media (max-width: 381px) {
+    .navbar {
+      padding: 0.25rem;
+    }
+    .navbar-brand img {
+      width: 30px;
+      margin-left: -20px;
+    }
+    .searchContainer {
+      width: 50%;
+    }
+    .mobileButtons .mobileButton {
+      width: 90%;
+      font-size: 0.9rem !important;
+    }
+  }
+  
