@@ -1,7 +1,7 @@
 import React from "react";
 import { Navbar, FormControl, Button, InputGroup } from "react-bootstrap";
 import styles from "./Navbar.module.css";
-import logo_img from "/voz-estudiantil-proyecto/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png";
+import logo_img from "@/assets/images/VozEstudiantil_logo.png";
 import { useNavigate } from "react-router-dom"; // Importamos el hook useNavigate para redirigir al login
 
 function CustomNavbar() {
