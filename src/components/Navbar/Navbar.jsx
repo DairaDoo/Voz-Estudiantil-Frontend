@@ -3,10 +3,6 @@ import { Navbar, FormControl, Button, InputGroup } from "react-bootstrap";
 import styles from "./Navbar.module.css";
 import logo_img from "@/assets/images/VozEstudiantil_logo.png";
 import { useNavigate } from "react-router-dom"; // Importamos el hook useNavigate para redirigir al login
-import React from 'react';
-import { Navbar, FormControl, Button, InputGroup } from 'react-bootstrap';
-import styles from './Navbar.module.css';
-import logo_img from '/VozEstudiantil_FrontEnd/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png';
 
 function CustomNavbar() {
   const navigate = useNavigate();
@@ -45,8 +41,6 @@ function CustomNavbar() {
 
       <Navbar.Toggle aria-controls="navbarResponsive" className="mb-0 ms-2" />
 
-      <Navbar.Toggle aria-controls="navbarResponsive" className="mb-0" />
-
       <Navbar.Collapse id="navbarResponsive" className="justify-content-end">
         {/* Botones de escritorio reutilizando el estilo de mobileButton */}
         <div className={`d-none d-lg-flex`}>
@@ -55,10 +49,10 @@ function CustomNavbar() {
             onClick={handleLoginClick}
             className={`me-2 ${styles.mobileButton}`}
           >
-            Login
-          </Button>=
+            Log In
+          </Button>
           <Button variant="primary" className={styles.mobileButton}>
-            Signup
+            Sign Up
           </Button>
         </div>
 
@@ -71,10 +65,10 @@ function CustomNavbar() {
             onClick={handleLoginClick}
             className={`mb-2 ${styles.mobileButton}`}
           >
-            Login
+            Log In
           </Button>
           <Button variant="primary" className={styles.mobileButton}>
-            Signup
+            Sign Up
           </Button>
         </div>
       </Navbar.Collapse>

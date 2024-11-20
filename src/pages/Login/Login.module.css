@@ -76,7 +76,7 @@
   border: 1.5px solid #007bff !important; /* Contorno con un tono más oscuro */
   color: #fff !important; /* Texto blanco */
   font-weight: bold !important;
-  font-size: 1em !important; /* Ajustar tamaño de fuente */
+  font-size: 20px !important; /* Ajustar tamaño de fuente */
   border-radius: 8px !important; /* Bordes redondeados */
   padding: 10px 20px !important; /* Reducir el padding para hacerlo más compacto */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* Sombra sutil */
