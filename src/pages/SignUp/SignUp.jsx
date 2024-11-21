@@ -9,7 +9,7 @@ function SignUp() {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    university: "", // Añadimos un campo para la universidad
   });
 
   const handleInputChange = (e) => {
@@ -22,12 +22,11 @@ function SignUp() {
     console.log("SignUp Data:", formData);
 
     // Aquí podrías añadir la lógica de validación y envío al backend
-    if (formData.password !== formData.confirmPassword) {
-      alert("Las contraseñas no coinciden");
+    if (!formData.university) {
+      alert("Por favor selecciona tu universidad");
       return;
     }
 
-    // Simular redirección al iniciar sesión
     alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
   };
 
@@ -60,13 +59,16 @@ function SignUp() {
       </div>
 
       {/* Contenedor del formulario de registro */}
-      <Row className="w-100 justify-content-center">
+      <Row
+        className="w-100 justify-content-center"
+        style={{ marginTop: "75px" }}
+      >
         <Col
           xs={10}
-          sm={7}
-          md={7}
-          lg={5}
-          xl={5}
+          sm={8}
+          md={8}
+          lg={6}
+          xl={6}
           className="p-4 shadow rounded bg-white"
         >
           <h2 className="text-center mb-4">Crea tu cuenta</h2>
@@ -101,19 +103,34 @@ function SignUp() {
               required
             />
 
-            <label>Confirmar Contraseña:</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
+            <label>Universidad:</label>
+            <select
+              name="university"
+              value={formData.university}
               onChange={handleInputChange}
               className="form-control mb-3"
               required
-            />
+            >
+              <option value="" disabled>
+                Selecciona tu universidad
+              </option>
+              <option value="Universidad Interamericana de Puerto Rico - Arecibo">
+                Universidad Interamericana de Puerto Rico - Arecibo
+              </option>
+              <option value="Universidad de Puerto Rico - Recinto de Río Piedras">
+                Universidad de Puerto Rico - Recinto de Río Piedras
+              </option>
+              <option value="Universidad del Sagrado Corazón">
+                Universidad del Sagrado Corazón
+              </option>
+              <option value="Universidad Ana G. Méndez">
+                Universidad Ana G. Méndez
+              </option>
+            </select>
 
             <button
               type="submit"
-              className={`btn w-100 ${styles.signUpButton}`} // Aplicamos la clase del módulo CSS
+              className={`btn w-100 ${styles.signUpButton}`}
             >
               Registrarme
             </button>
