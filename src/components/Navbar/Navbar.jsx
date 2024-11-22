@@ -1,7 +1,7 @@
 import React from 'react'; // Importamos la biblioteca React para construir el componente.
 import { Navbar, FormControl, Button, InputGroup } from 'react-bootstrap'; // Importamos componentes de Bootstrap que usaremos.
 import styles from './Navbar.module.css'; // Importamos estilos personalizados para este componente.
-import logo_img from '/VozEstudiantil_FrontEnd/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png'; // Importamos la imagen del logo.
+import logo_img from '@assets/images/VozEstudiantil_logo.png'; // Usa el alias definido en jsconfig.json para la imagen del logo
 
 function CustomNavbar() { // Definimos un componente funcional llamado CustomNavbar.
   return (

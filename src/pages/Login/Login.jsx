@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import logo from '/VozEstudiantil_FrontEnd/Voz-Estudiantil-Frontend/src/assets/images/VozEstudiantil_logo.png'; // Importa la imagen del logo
+import logo from '@assets/images/VozEstudiantil_logo.png'; // Usa el alias definido en jsconfig.json
 import './Login.module.css';
-
 
 function LoginPage() {
     const [username, setUsername] = useState('');
