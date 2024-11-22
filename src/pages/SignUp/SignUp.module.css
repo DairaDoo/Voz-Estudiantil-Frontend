@@ -1,0 +1,6 @@
+.movableContainer {
+    margin: 20px; /* Valor inicial (puede ser sobrescrito por estilos en línea) */
+    padding: 10px; /* Espacio interno */
+    transition: all 0.3s ease; /* Transición suave al cambiar los valores */
+  }
+  

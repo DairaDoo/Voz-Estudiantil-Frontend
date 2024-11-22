@@ -1,52 +1,78 @@
-import React from 'react'; // Importamos la biblioteca React para construir el componente.
-import { Navbar, FormControl, Button, InputGroup } from 'react-bootstrap'; // Importamos componentes de Bootstrap que usaremos.
-import styles from './Navbar.module.css'; // Importamos estilos personalizados para este componente.
-import logo_img from '@assets/images/VozEstudiantil_logo.png'; // Usa el alias definido en jsconfig.json para la imagen del logo
 
-function CustomNavbar() { // Definimos un componente funcional llamado CustomNavbar.
+import React from "react";
+import { Navbar, FormControl, Button, InputGroup } from "react-bootstrap";
+import styles from "./Navbar.module.css";
+import logo_img from "@/assets/images/VozEstudiantil_logo.png";
+import { useNavigate } from "react-router-dom"; // Importamos el hook useNavigate para redirigir al login
+
+function CustomNavbar() {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
+
   return (
-    <Navbar expand="lg" bg="light" variant="light" className="px-3"> {/* Creamos el Navbar con opciones de expansión y estilo. */}
-      <Navbar.Brand href="#" className="d-flex align-items-center"> {/* Enlace de marca que contiene el logo y el nombre. */}
+    <Navbar expand="lg" bg="light" variant="light" className="px-3">
+      <Navbar.Brand href="#" className="d-flex align-items-center">
         <img
-          src={logo_img} // Establecemos la fuente de la imagen del logo.
-          alt="Logo" // Texto alternativo para la imagen.
-          className="d-inline-block align-top" // Clases de Bootstrap para alinear la imagen.
-          style={{ width: '50px', marginRight: '8px' }} // Estilos en línea para ajustar el tamaño y margen de la imagen.
+          src={logo_img}
+          alt="Logo"
+          className="d-inline-block align-top"
+          style={{ width: "50px", marginRight: "8px" }}
         />
-        <span className="d-none d-lg-inline h2">Voz Estudiantil</span> {/* Nombre de la marca que solo se muestra en pantallas grandes. */}
+        <span className="d-none d-lg-inline h2">Voz Estudiantil</span>
       </Navbar.Brand>
 
-      <div className={`flex-grow-1 d-flex justify-content-center ${styles.searchContainer}`}> {/* Contenedor del campo de búsqueda, ocupa el espacio restante. */}
-        <InputGroup className="w-100"> {/* Grupo de entrada para el campo de búsqueda. */}
-          <InputGroup.Text className="border-0"> {/* Texto que se muestra dentro del campo de búsqueda (icono de búsqueda). */}
-            <i className="bi bi-search" style={{ fontSize: '1rem' }}></i> {/* Icono de búsqueda. */}
+      <div
+        className={`flex-grow-1 d-flex justify-content-center ${styles.searchContainer}`}
+      >
+        <InputGroup className="w-100">
+          <InputGroup.Text className={`search-icon ${styles.searchIcon}`}>
+            <i className="bi bi-search"></i>
           </InputGroup.Text>
           <FormControl
-            type="search" // Tipo de entrada como búsqueda.
-            placeholder="Buscar" // Texto de marcador de posición.
-            className="border-start-0" // Quitar el borde izquierdo del campo de búsqueda.
-            aria-label="Search" // Atributo accesible que describe el campo.
+            type="search"
+            placeholder="Buscar"
+            className={`search-input ${styles.searchInput}`}
+            aria-label="Search"
           />
         </InputGroup>
       </div>
 
-      <Navbar.Toggle aria-controls="navbarResponsive" className="mb-0" /> {/* Botón que alterna la visibilidad del menú en pantallas pequeñas. */}
+      <Navbar.Toggle aria-controls="navbarResponsive" className="mb-0 ms-2" />
 
-      <Navbar.Collapse id="navbarResponsive" className="justify-content-end"> {/* Sección colapsable del Navbar para mostrar botones de inicio de sesión y registro. */}
-        <div className={`d-none d-lg-flex ${styles.desktopButtons}`}> {/* Botones que se muestran solo en pantallas grandes. */}
-          <Button variant="outline-primary" className="me-2"> {/* Botón de inicio de sesión con variante de contorno. */}
+      <Navbar.Collapse id="navbarResponsive" className="justify-content-end">
+        {/* Botones de escritorio reutilizando el estilo de mobileButton */}
+        <div className={`d-none d-lg-flex`}>
+          <Button
+            variant="outline-primary"
+            onClick={handleLoginClick}
+            className={`me-2 ${styles.mobileButton}`}
+          >
             Log In
           </Button>
-          <Button variant="primary"> {/* Botón de registro con variante primaria. */}
+          <Button variant="primary" onClick={handleSignUpClick} className={styles.mobileButton}>
             Sign Up
           </Button>
         </div>
 
-        <div className={`d-lg-none d-flex flex-column align-items-center p-3 ${styles.mobileButtons}`}> {/* Botones que se muestran solo en pantallas pequeñas. */}
-          <Button variant="outline-primary" className={`mb-2 ${styles.mobileButton}`}> {/* Botón de inicio de sesión para móviles. */}
+        {/* Botones móviles */}
+        <div
+          className={`d-lg-none d-flex flex-column align-items-center p-3 ${styles.mobileButtons}`}
+        >
+          <Button
+            variant="outline-primary"
+            onClick={handleLoginClick}
+            className={`mb-2 ${styles.mobileButton}`}
+          >
             Log In
           </Button>
-          <Button variant="primary" className={styles.mobileButton}> {/* Botón de registro para móviles. */}
+          <Button variant="primary" className={styles.mobileButton}>
             Sign Up
           </Button>
         </div>
@@ -55,4 +81,4 @@ function CustomNavbar() { // Definimos un componente funcional llamado CustomNav
   );
 }
 
-export default CustomNavbar; // Exportamos el componente para poder utilizarlo en otras partes de la aplicación.
+export default CustomNavbar;

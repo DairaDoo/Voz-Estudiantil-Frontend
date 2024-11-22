@@ -1,20 +1,24 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
-import HomePage from './pages/HomePage/HomePage';
-import LoginPage from 'pages/Login/Login';
+import Layout from '@/components/Layout/Layout';
+import HomePage from '@/pages/HomePage/HomePage';
+import LoginPage from '@/pages/Login/Login';
+import SignUp from './pages/SignUp/SignUp';
 
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          {/* Aquí se pasan en elements los componentes con las páginas que se mostrarán en cada sección */}
-          <Route path='/' element={<HomePage />}></Route>
-          <Route path='/professors' element={<h1>Future Professors Section</h1>}></Route>
-          <Route path='/events' element={<h1>Future Events Section</h1>}></Route>
-          <Route path='/login' element={<LoginPage />}></Route>
-        </Routes>
-      </Layout>
+      <Routes>
+        {/* Rutas que deben estar dentro del Layout */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/professors" element={<h1>Future Professors Section</h1>} />
+          <Route path="/events" element={<h1>Future Events Section</h1>} />
+        </Route>
+
+        {/* Ruta de login fuera del Layout */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
     </Router>
   );
 }
