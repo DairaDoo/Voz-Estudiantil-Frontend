@@ -1,0 +1,12 @@
+/* HomePage.css */
+.options-container {
+    width: 100%;
+    max-width: 300px; /* El contenedor será ancho máximo de 300px */
+    margin-top: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  

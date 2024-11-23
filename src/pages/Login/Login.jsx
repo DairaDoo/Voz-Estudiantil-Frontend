@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom'; // Agregamos useNavigate para redirección
-import logo from '@assets/images/VozEstudiantil_logo.png'; // Usa el alias definido en jsconfig.json
+import logo from '@/assets/images/VozEstudiantil_logo.png'; // Usa el alias definido en jsconfig.json
 import styles from './Login.module.css';
 
 function LoginPage() {
