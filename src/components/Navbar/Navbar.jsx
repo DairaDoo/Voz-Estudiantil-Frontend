@@ -11,6 +11,11 @@ function CustomNavbar() {
     navigate("/login");
   };
 
+  const handleSignUpClick = () => {
+    navigate("/signup");
+  };
+
+
   return (
     <Navbar expand="lg" bg="light" variant="light" className="px-3">
       <Navbar.Brand href="#" className="d-flex align-items-center">
@@ -51,7 +56,7 @@ function CustomNavbar() {
           >
             Log In
           </Button>
-          <Button variant="primary" className={styles.mobileButton}>
+          <Button variant="primary" onClick={handleSignUpClick} className={styles.mobileButton}>
             Sign Up
           </Button>
         </div>
@@ -67,7 +72,9 @@ function CustomNavbar() {
           >
             Log In
           </Button>
-          <Button variant="primary" className={styles.mobileButton}>
+          <Button variant="primary" 
+          onClick={handleSignUpClick}
+          className={styles.mobileButton}>
             Sign Up
           </Button>
         </div>
