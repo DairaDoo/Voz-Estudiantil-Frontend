@@ -1,5 +1,7 @@
 import React from 'react';
 import './OptionsContainer.css'; // Archivo de estilos
+import OptionsContainer from '../../components/OptionsContainer';
+
 
 const OptionsContainer = () => {
   const options = [

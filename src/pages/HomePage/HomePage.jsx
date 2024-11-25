@@ -1,6 +1,6 @@
 // src/pages/HomePage/HomePage.jsx
 import React from 'react';
-import OptionsContainer from '../../components/OptionsContainer';
+import OptionsContainer from '@/components/OptionsContainer';
 
 const HomePage = () => {
   return (
