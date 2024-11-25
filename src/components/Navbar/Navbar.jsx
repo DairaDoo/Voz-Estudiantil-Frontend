@@ -72,7 +72,9 @@ function CustomNavbar() {
           >
             Log In
           </Button>
-          <Button variant="primary" className={styles.mobileButton}>
+          <Button variant="primary" 
+          onClick={handleSignUpClick}
+          className={styles.mobileButton}>
             Sign Up
           </Button>
         </div>
