@@ -1,7 +1,8 @@
 // src/pages/HomePage/HomePage.jsx
 import React from 'react';
+import OptionsContainer from '@/components/Contenedor/OptionsContainer';
 
-const HomePage = () => {
+function HomePage() {
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
@@ -11,3 +12,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

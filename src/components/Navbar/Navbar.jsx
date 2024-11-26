@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Navbar, FormControl, Button, InputGroup } from "react-bootstrap";
 import styles from "./Navbar.module.css";
@@ -14,7 +15,6 @@ function CustomNavbar() {
   const handleSignUpClick = () => {
     navigate("/signup");
   };
-
 
   return (
     <Navbar expand="lg" bg="light" variant="light" className="px-3">
