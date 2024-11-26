@@ -1,33 +1,72 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate
 import logo from "@/assets/images/VozEstudiantil_logo.png";
-import styles from "./SignUp.module.css"; // Cambiamos el nombre del módulo CSS para evitar conflictos
+import styles from "./SignUp.module.css";
 
 function SignUp() {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
-    university: "", // Añadimos un campo para la universidad
+    university: "",
   });
+
+  const navigate = useNavigate(); // Inicializa useNavigate
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log("SignUp Data:", formData);
 
-    // Aquí podrías añadir la lógica de validación y envío al backend
     if (!formData.university) {
       alert("Por favor selecciona tu universidad");
       return;
     }
 
-    alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+    try {
+      const response = await fetch("http://localhost:5000/users/create_user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.username,
+          email: formData.email,
+          password: formData.password,
+          university_id: getUniversityId(formData.university),
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Error al registrar el usuario");
+      }
+
+      const data = await response.json();
+      console.log("Usuario registrado:", data);
+
+      // Redirige al usuario al homepage
+      navigate("/"); // Cambia la ruta según sea necesario
+
+      alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
+    } catch (error) {
+      console.error("Error en el registro:", error);
+      alert(error.message || "Error al registrar el usuario.");
+    }
+  };
+
+  const getUniversityId = (universityName) => {
+    const universities = {
+      "Universidad Interamericana de Puerto Rico - Arecibo": 1,
+      "Universidad de Puerto Rico - Recinto de Río Piedras": 2,
+      "Universidad del Sagrado Corazón": 3,
+      "Universidad Ana G. Méndez": 4,
+    };
+    return universities[universityName] || null;
   };
 
   return (
@@ -35,7 +74,6 @@ function SignUp() {
       fluid
       className="vh-100 d-flex flex-column justify-content-center align-items-center"
     >
-      {/* Logo y Nombre de la Aplicación */}
       <div className="position-absolute top-0 start-0 p-3">
         <div className="d-flex align-items-center">
           <Link
@@ -58,7 +96,6 @@ function SignUp() {
         </div>
       </div>
 
-      {/* Contenedor del formulario de registro */}
       <Row
         className="w-100 justify-content-center"
         style={{ marginTop: "75px" }}
