@@ -9,7 +9,7 @@ function SignUp() {
     username: "",
     email: "",
     password: "",
-    university: "", // Guardará el ID de la universidad seleccionada
+    university: "",
   });
   const [universities, setUniversities] = useState([]); // Estado para almacenar las universidades
   const navigate = useNavigate();
@@ -26,7 +26,9 @@ function SignUp() {
         setUniversities(data);
       } catch (error) {
         console.error("Error al cargar universidades:", error);
-        alert("Hubo un error al cargar las universidades. Por favor, intenta más tarde.");
+        alert(
+          "Hubo un error al cargar las universidades. Por favor, intenta más tarde."
+        );
       }
     };
 
@@ -35,17 +37,35 @@ function SignUp() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  
+    // Si el campo es "university" y se selecciona "No especificar", asignamos null
+    if (name === "university" && value === "") {
+      setFormData({
+        ...formData,
+        [name]: null, // Asignamos null si el usuario no seleccionó universidad
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value || "", // Garantiza que nunca sea null, excepto para universidad
+      });
+    }
   };
+  
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
-    if (!formData.university) {
-      alert("Por favor selecciona tu universidad o elige la opción de no especificar.");
-      return;
-    }
-
+  
+    // Si no se selecciona una universidad, se enviará null
+    const universityId = formData.university || null;  // En caso de que sea "", se convierte en null
+  
+    console.log("Datos enviados al backend:", {
+      name: formData.username,
+      email: formData.email,
+      password: formData.password,
+      university_id: universityId, // Si no se seleccionó universidad, se enviará null
+    });
+  
     try {
       const response = await fetch("http://localhost:5000/users/create_user", {
         method: "POST",
@@ -56,18 +76,18 @@ function SignUp() {
           name: formData.username,
           email: formData.email,
           password: formData.password,
-          university_id: formData.university, // Usa el ID de la universidad seleccionada
+          university_id: universityId, // Se enviará null si no se seleccionó universidad
         }),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Error al registrar el usuario");
       }
-
+  
       const data = await response.json();
       console.log("Usuario registrado:", data);
-
+  
       navigate("/"); // Redirige al homepage
       alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
     } catch (error) {
@@ -75,6 +95,8 @@ function SignUp() {
       alert(error.message || "Error al registrar el usuario.");
     }
   };
+  
+
 
   return (
     <Container
@@ -141,10 +163,11 @@ function SignUp() {
             <input
               type="password"
               name="password"
-              value={formData.password}
-              onChange={handleInputChange}
               className="form-control mb-3"
               required
+              value={formData.password}
+              onChange={handleInputChange}
+              autoComplete="current-password"
             />
 
             <label>Universidad:</label>
@@ -163,7 +186,7 @@ function SignUp() {
                   {uni.name}
                 </option>
               ))}
-              <option value="none">No especificar</option>
+              <option value="">No especificar</option>
             </select>
 
             <button
