@@ -14,6 +14,12 @@ function SignUp() {
   const [universities, setUniversities] = useState([]); // Estado para almacenar las universidades
   const navigate = useNavigate();
 
+  const [focusField, setFocusField] = useState("");
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
+
   // Fetch para obtener las universidades al montar el componente
   useEffect(() => {
     const fetchUniversities = async () => {
@@ -50,8 +56,56 @@ function SignUp() {
         [name]: value || "", // Garantiza que nunca sea null, excepto para universidad
       });
     }
+
+    // Validaciones dinámicas
+    if (name === "username") {
+      validateUsername(value);
+    } else if (name === "password") {
+      validatePassword(value);
+    }
   };
-  
+
+  const validateUsername = (username) => {
+    if (username.length > 10) {
+      setErrors((prev) => ({
+        ...prev,
+        username: "El nombre de usuario debe tener menos de 10 caracteres.",
+      }));
+    } else if (/nombre|personal|usuario/i.test(username)) {
+      setErrors((prev) => ({
+        ...prev,
+        username: "No debe incluir información personal como 'nombre', etc.",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, username: "" }));
+    }
+  };
+
+  const validatePassword = (password) => {
+    if (!/[A-Z]/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos una letra mayúscula.",
+      }));
+    } else if (!/[a-z]/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos una letra minúscula.",
+      }));
+    } else if (!/\d/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos un número.",
+      }));
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos un carácter especial.",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, password: "" }));
+    }
+  };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -95,8 +149,6 @@ function SignUp() {
       alert(error.message || "Error al registrar el usuario.");
     }
   };
-  
-
 
   return (
     <Container
@@ -144,10 +196,21 @@ function SignUp() {
               type="text"
               name="username"
               value={formData.username}
+              onFocus={() => setFocusField("username")}
+              onBlur={() => setFocusField("")}
               onChange={handleInputChange}
               className="form-control mb-3"
               required
             />
+            {focusField === "username" && (
+              <small className="text-muted d-block">
+                - Menos de 10 caracteres.<br />
+                - Sin información personal como tu nombre.
+              </small>
+            )}
+            {errors.username && (
+              <small className="text-danger d-block">{errors.username}</small>
+            )}
 
             <label>Email:</label>
             <input
@@ -166,9 +229,22 @@ function SignUp() {
               className="form-control mb-3"
               required
               value={formData.password}
+              onFocus={() => setFocusField("password")}
+              onBlur={() => setFocusField("")}
               onChange={handleInputChange}
               autoComplete="current-password"
             />
+            {focusField === "password" && (
+              <small className="text-muted d-block">
+                - Al menos una mayúscula<br/>
+                - Al menos una letra minúscula<br/>
+                - Al menos un número<br/>
+                - Al menos un carácter especial
+              </small>
+            )}
+            {errors.password && (
+              <small className="text-danger d-block">{errors.password}</small>
+            )}
 
             <label>Universidad:</label>
             <select
