@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/images/VozEstudiantil_logo.png";
 import styles from "./SignUp.module.css";
 
@@ -11,12 +11,66 @@ function SignUp() {
     password: "",
     university: "",
   });
+  const [focusField, setFocusField] = useState("");
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
 
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+    // Validaciones dinámicas
+    if (name === "username") {
+      validateUsername(value);
+    } else if (name === "password") {
+      validatePassword(value);
+    }
+  };
+
+  const validateUsername = (username) => {
+    if (username.length > 10) {
+      setErrors((prev) => ({
+        ...prev,
+        username: "El nombre de usuario debe tener menos de 10 caracteres.",
+      }));
+    } else if (/nombre|personal|usuario/i.test(username)) {
+      setErrors((prev) => ({
+        ...prev,
+        username: "No debe incluir información personal como 'nombre', etc.",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, username: "" }));
+    }
+  };
+
+  const validatePassword = (password) => {
+    if (!/[A-Z]/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos una letra mayúscula.",
+      }));
+    } else if (!/[a-z]/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos una letra minúscula.",
+      }));
+    } else if (!/\d/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos un número.",
+      }));
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Debe incluir al menos un carácter especial.",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, password: "" }));
+    }
   };
 
   const handleSignUp = async (e) => {
@@ -24,6 +78,11 @@ function SignUp() {
 
     if (!formData.university) {
       alert("Por favor selecciona tu universidad");
+      return;
+    }
+
+    if (errors.username || errors.password) {
+      alert("Por favor corrige los errores antes de continuar.");
       return;
     }
 
@@ -49,8 +108,7 @@ function SignUp() {
       const data = await response.json();
       console.log("Usuario registrado:", data);
 
-      // Redirige al usuario al homepage
-      navigate("/"); // Cambia la ruta según sea necesario
+      navigate("/");
 
       alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
     } catch (error) {
@@ -115,10 +173,21 @@ function SignUp() {
               type="text"
               name="username"
               value={formData.username}
+              onFocus={() => setFocusField("username")}
+              onBlur={() => setFocusField("")}
               onChange={handleInputChange}
-              className="form-control mb-3"
+              className="form-control mb-1"
               required
             />
+            {focusField === "username" && (
+              <small className="text-muted d-block">
+                - Menos de 10 caracteres.<br />
+                - Sin información personal como tu nombre.
+              </small>
+            )}
+            {errors.username && (
+              <small className="text-danger d-block">{errors.username}</small>
+            )}
 
             <label>Email:</label>
             <input
@@ -135,10 +204,23 @@ function SignUp() {
               type="password"
               name="password"
               value={formData.password}
+              onFocus={() => setFocusField("password")}
+              onBlur={() => setFocusField("")}
               onChange={handleInputChange}
-              className="form-control mb-3"
+              className="form-control mb-1"
               required
             />
+            {focusField === "password" && (
+              <small className="text-muted d-block">
+                - Al menos una mayúscula<br/>
+                - Al menos una letra minúscula<br/>
+                - Al menos un número<br/>
+                - Al menos un carácter especial
+              </small>
+            )}
+            {errors.password && (
+              <small className="text-danger d-block">{errors.password}</small>
+            )}
 
             <label>Universidad:</label>
             <select
