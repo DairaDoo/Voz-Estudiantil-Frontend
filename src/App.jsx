@@ -4,6 +4,7 @@ import Layout from '@/components/Layout/Layout';
 import HomePage from '@pages/HomePage/HomePage';
 import LoginPage from '@/pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
+import ReviewsPage from './components/ShowReviews/ShowReviews';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         {/* Rutas fuera del Layout */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/reviews" element={<ReviewsPage />} />
       </Routes>
     </Router>
   );

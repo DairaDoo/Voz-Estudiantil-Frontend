@@ -39,3 +39,21 @@
   transform: translateY(1px) !important; /* Hundir ligeramente el botón */
   background-color: #006fcc !important; /* Fondo aún más oscuro cuando se hace clic */
 }
+
+/* Estilos adicionales para retroalimentación */
+.input-valid {
+  border-color: #28a745; /* Verde cuando es válido */
+}
+
+.input-invalid {
+  border-color: #dc3545; /* Rojo cuando no es válido */
+}
+
+.input-feedback {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.input-error {
+  color: #dc3545;
+}

@@ -1,0 +1,102 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .reviewCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .reviewImage {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  
+  .placeholder {
+    width: 100%;
+    max-width: 400px;
+    height: 200px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .info {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .text {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .meta {
+    font-size: 0.9rem;
+    color: #888;
+  }
+  
+  .voteSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .upVote,
+  .downVote {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .upVote {
+    color: green;
+  }
+  
+  .downVote {
+    color: red;
+  }
+  
+  .voteCount {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .error {
+    color: red;
+    text-align: center;
+  }
+  
+  .loading {
+    text-align: center;
+    color: #555;
+  }
+  
