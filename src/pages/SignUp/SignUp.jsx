@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/images/VozEstudiantil_logo.png";
 import styles from "./SignUp.module.css";
 
@@ -9,10 +9,29 @@ function SignUp() {
     username: "",
     email: "",
     password: "",
-    university: "",
+    university: "", // Guardará el ID de la universidad seleccionada
   });
+  const [universities, setUniversities] = useState([]); // Estado para almacenar las universidades
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // Inicializa useNavigate
+  // Fetch para obtener las universidades al montar el componente
+  useEffect(() => {
+    const fetchUniversities = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/universities");
+        if (!response.ok) {
+          throw new Error("Error al obtener universidades");
+        }
+        const data = await response.json();
+        setUniversities(data);
+      } catch (error) {
+        console.error("Error al cargar universidades:", error);
+        alert("Hubo un error al cargar las universidades. Por favor, intenta más tarde.");
+      }
+    };
+
+    fetchUniversities();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +42,7 @@ function SignUp() {
     e.preventDefault();
 
     if (!formData.university) {
-      alert("Por favor selecciona tu universidad");
+      alert("Por favor selecciona tu universidad o elige la opción de no especificar.");
       return;
     }
 
@@ -37,7 +56,7 @@ function SignUp() {
           name: formData.username,
           email: formData.email,
           password: formData.password,
-          university_id: getUniversityId(formData.university),
+          university_id: formData.university, // Usa el ID de la universidad seleccionada
         }),
       });
 
@@ -49,24 +68,12 @@ function SignUp() {
       const data = await response.json();
       console.log("Usuario registrado:", data);
 
-      // Redirige al usuario al homepage
-      navigate("/"); // Cambia la ruta según sea necesario
-
+      navigate("/"); // Redirige al homepage
       alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
     } catch (error) {
       console.error("Error en el registro:", error);
       alert(error.message || "Error al registrar el usuario.");
     }
-  };
-
-  const getUniversityId = (universityName) => {
-    const universities = {
-      "Universidad Interamericana de Puerto Rico - Arecibo": 1,
-      "Universidad de Puerto Rico - Recinto de Río Piedras": 2,
-      "Universidad del Sagrado Corazón": 3,
-      "Universidad Ana G. Méndez": 4,
-    };
-    return universities[universityName] || null;
   };
 
   return (
@@ -151,18 +158,12 @@ function SignUp() {
               <option value="" disabled>
                 Selecciona tu universidad
               </option>
-              <option value="Universidad Interamericana de Puerto Rico - Arecibo">
-                Universidad Interamericana de Puerto Rico - Arecibo
-              </option>
-              <option value="Universidad de Puerto Rico - Recinto de Río Piedras">
-                Universidad de Puerto Rico - Recinto de Río Piedras
-              </option>
-              <option value="Universidad del Sagrado Corazón">
-                Universidad del Sagrado Corazón
-              </option>
-              <option value="Universidad Ana G. Méndez">
-                Universidad Ana G. Méndez
-              </option>
+              {universities.map((uni) => (
+                <option key={uni.university_id} value={uni.university_id}>
+                  {uni.name}
+                </option>
+              ))}
+              <option value="none">No especificar</option>
             </select>
 
             <button
