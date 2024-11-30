@@ -108,7 +108,7 @@ const ShowReviews = () => {
                   <button
                     className="btn btn-outline-secondary btn-sm ms-2" // Botón más pequeño
                     onClick={() => handleComments(review.review_id)}
-                    style={{ fontSize: "17x", padding: "6px 12px" }} // Ajustando el tamaño y espaciado
+                    style={{ fontSize: "17px", padding: "6px 12px" }} // Ajustando el tamaño y espaciado
                   >
                     <i className="bi bi-chat-dots"></i>
                   </button>
