@@ -31,31 +31,34 @@ const ShowReviews = () => {
         },
         body: JSON.stringify({ type }), // Enviamos el tipo de voto ('up' o 'down')
       });
-
+  
       if (!response.ok) {
         throw new Error("Error al actualizar el voto");
       }
-
+  
       // Actualizar el estado del review con el nuevo voto
       const updatedReviews = reviews.map((review) => {
         if (review.review_id === reviewId) {
           if (type === "up") {
             review.up_vote += 1; // Incrementamos el up_vote
           } else if (type === "down") {
-            review.down_vote += 1; // Incrementamos el down_vote
+            if (review.down_vote > 0) {
+              review.down_vote += 1; // Incrementamos el down_vote solo si es mayor que cero
+            }
           }
         }
         return review;
       });
-
+  
       // Ordenar las reseñas por la diferencia entre up_vote y down_vote (de mayor a menor)
       updatedReviews.sort((a, b) => (b.up_vote - b.down_vote) - (a.up_vote - a.down_vote));
-
+  
       setReviews(updatedReviews); // Actualizamos el estado de las reseñas
     } catch (err) {
       setError(err.message);
     }
   };
+  
 
   const handleComments = (reviewId) => {
     console.log(`Abrir sección de comentarios para el review ID: ${reviewId}`);
