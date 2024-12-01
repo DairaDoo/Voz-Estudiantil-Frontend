@@ -10,6 +10,8 @@ const ShowReviews = () => {
         const response = await fetch("http://localhost:5000/reviews_with_names");
         if (!response.ok) throw new Error("Error al obtener los reviews");
         const data = await response.json();
+        // Ordenar las reseñas al principio por la diferencia entre up_vote y down_vote
+        data.sort((a, b) => (b.up_vote - b.down_vote) - (a.up_vote - a.down_vote));
         setReviews(data);
       } catch (err) {
         setError(err.message);
@@ -45,6 +47,9 @@ const ShowReviews = () => {
         }
         return review;
       });
+
+      // Ordenar las reseñas por la diferencia entre up_vote y down_vote (de mayor a menor)
+      updatedReviews.sort((a, b) => (b.up_vote - b.down_vote) - (a.up_vote - a.down_vote));
 
       setReviews(updatedReviews); // Actualizamos el estado de las reseñas
     } catch (err) {
