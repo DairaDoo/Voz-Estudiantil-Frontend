@@ -15,10 +15,11 @@
     "react-router-dom": "^6.27.0",
     "react-scripts": "^5.0.1",
     "voz-estudiantil-frontend": "file:",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.96.1"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "craco start react-scripts start --openssl-legacy-provider",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
@@ -42,6 +43,6 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0"
+    "@craco/craco": "^5.9.0"
   }
 }
