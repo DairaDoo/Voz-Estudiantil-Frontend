@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import styles from './ShowReviews.module.css';
 
 const ShowReviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -20,8 +19,37 @@ const ShowReviews = () => {
     fetchReviews();
   }, []);
 
-  const handleVote = (reviewId, type) => {
-    console.log(`${type} vote for review ID: ${reviewId}`);
+  const handleVote = async (reviewId, type) => {
+    try {
+      // Enviar una petición PUT al backend para actualizar el voto
+      const response = await fetch(`http://localhost:5000/reviews/${reviewId}/votes`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ type }), // Enviamos el tipo de voto ('up' o 'down')
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al actualizar el voto");
+      }
+
+      // Actualizar el estado del review con el nuevo voto
+      const updatedReviews = reviews.map((review) => {
+        if (review.review_id === reviewId) {
+          if (type === "up") {
+            review.up_vote += 1; // Incrementamos el up_vote
+          } else if (type === "down") {
+            review.down_vote += 1; // Incrementamos el down_vote
+          }
+        }
+        return review;
+      });
+
+      setReviews(updatedReviews); // Actualizamos el estado de las reseñas
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const handleComments = (reviewId) => {
@@ -39,24 +67,32 @@ const ShowReviews = () => {
           <div key={review.review_id} className="col-12 mb-4">
             <div className="card shadow-sm">
               <div className="card-body">
-                {/* Encabezado con usuario y fecha */}
-                <div className="d-flex align-items-center mb-3">
-                  <div
-                    className="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center me-3"
-                    style={{ width: "40px", height: "40px", fontSize: "20px" }} // Aumentando el tamaño del ícono
-                  >
-                    <i className="bi bi-person-circle"></i>
+                {/* Encabezado con usuario, fecha y contexto académico */}
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                  <div className="d-flex align-items-center">
+                    <div
+                      className="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center me-3"
+                      style={{ width: "40px", height: "40px", fontSize: "20px" }}
+                    >
+                      <i className="bi bi-person-circle"></i>
+                    </div>
+                    <div>
+                      <h5 className="mb-0" style={{ fontSize: "19px" }}>
+                        {review.user_name || "Anónimo"}
+                      </h5>
+                      <small className="text-muted" style={{ fontSize: "17px" }}>
+                        {new Date(review.create_date).toLocaleDateString()}
+                      </small>
+                    </div>
                   </div>
-                  <div>
-                    <h5 className="mb-0" style={{ fontSize: "19px" }}> {/* Aumentando el tamaño del nombre */}
-                      {review.user_name || "Anónimo"}
-                    </h5>
-                    <small className="text-muted" style={{ fontSize: "17px" }}> {/* Aumentando el tamaño de la fecha */}
-                      {new Date(review.create_date).toLocaleDateString()}
+                  {/* Información de universidad y campus */}
+                  <div className="text-end">
+                    <small className="text-muted" style={{ fontSize: "16px" }}>
+                      {review.university_name}
+                      {review.campus_name ? ` - ${review.campus_name}` : ""}
                     </small>
                   </div>
                 </div>
-
 
                 {/* Contenido del review */}
                 <p className="card-text fs-6">{review.review || "Sin descripción"}</p>
@@ -86,35 +122,33 @@ const ShowReviews = () => {
                 {/* Sección de acciones */}
                 <div className="d-flex justify-content-start align-items-center">
                   <button
-                    className="btn btn-outline-primary btn-sm me-2" // Botón más pequeño y con buen tamaño
+                    className="btn btn-outline-primary btn-sm me-2"
                     onClick={() => handleVote(review.review_id, "up")}
-                    style={{ fontSize: "17px", padding: "6px 12px" }} // Ajustando el tamaño y espaciado
+                    style={{ fontSize: "17px", padding: "6px 12px" }}
                   >
                     <i className="bi bi-hand-thumbs-up-fill"></i>
                   </button>
 
-                  <span className="fw-bold fs-5 me-2" style={{ fontSize: "17px" }}> {/* Tamaño similar al de username */}
+                  <span className="fw-bold fs-5 me-2" style={{ fontSize: "17px" }}>
                     {review.up_vote - review.down_vote}
                   </span>
 
                   <button
-                    className="btn btn-outline-danger btn-sm" // Botón más pequeño
+                    className="btn btn-outline-danger btn-sm"
                     onClick={() => handleVote(review.review_id, "down")}
-                    style={{ fontSize: "17px", padding: "6px 12px" }} // Ajustando el tamaño y espaciado
+                    style={{ fontSize: "17px", padding: "6px 12px" }}
                   >
                     <i className="bi bi-hand-thumbs-down-fill"></i>
                   </button>
 
                   <button
-                    className="btn btn-outline-secondary btn-sm ms-2" // Botón más pequeño
+                    className="btn btn-outline-secondary btn-sm ms-2"
                     onClick={() => handleComments(review.review_id)}
-                    style={{ fontSize: "17px", padding: "6px 12px" }} // Ajustando el tamaño y espaciado
+                    style={{ fontSize: "17px", padding: "6px 12px" }}
                   >
                     <i className="bi bi-chat-dots"></i>
                   </button>
                 </div>
-
-
               </div>
             </div>
           </div>
