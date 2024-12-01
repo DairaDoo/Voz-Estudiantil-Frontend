@@ -4,7 +4,7 @@ import styles from "./NewPost.module.css";
 function NewPost({ onClick }) {
   return (
     <button
-      className={`${styles.floatingButton} btn rounded-circle position-fixed d-flex align-items-center justify-content-center`}
+      className={`${styles.floatingButton} rounded-circle position-fixed d-flex align-items-center justify-content-center`}
       style={{
         width: "56px",
         height: "56px",
