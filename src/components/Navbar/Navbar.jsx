@@ -3,10 +3,13 @@ import { Navbar, FormControl, Button, InputGroup } from "react-bootstrap";
 import styles from "./Navbar.module.css";
 import logo_img from "@/assets/images/VozEstudiantil_logo.png";
 import { useNavigate } from "react-router-dom";
+import { useModal } from "@/components/NotLoggedIn/ModalContext";
 
 function CustomNavbar() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+
+  const { setShowModal } = useModal(); // Accede a la función para mostrar el modal
 
   // Revisamos si el usuario ya está autenticado
   useEffect(() => {
@@ -29,9 +32,15 @@ function CustomNavbar() {
     // Limpiar el localStorage y redirigir al login
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
+    navigate("/login"); // Redirigir a la página de inicio
+    setShowModal(true); // Muestra el modal de usuario no autenticado
     setUser(null); // Limpiar el estado
-    navigate("/"); // Redirigir a la página de login
+  
+    // Puedes también enviar un evento global (opcional) para forzar la actualización
+    window.dispatchEvent(new Event("logout"));
   };
+  
+  
 
   return (
     <Navbar expand="lg" bg="light" variant="light" className="px-3">
