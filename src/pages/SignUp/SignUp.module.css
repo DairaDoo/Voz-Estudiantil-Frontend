@@ -1,0 +1,59 @@
+.movableContainer {
+ margin: 20px; /* Valor inicial (puede ser sobrescrito por estilos en línea) */
+ padding: 10px; /* Espacio interno */
+ transition: all 0.3s ease; /* Transición suave al cambiar los valores */
+}
+
+.signUpButton {
+  width: 50% !important; /* Ajustar el tamaño del botón */
+  margin: 0 auto 15px !important; /* Centrar el botón horizontalmente */
+  background-color: #00aaff !important; /* Azul brillante para destacar */
+  border: 1.5px solid #007bff !important; /* Contorno con un tono más oscuro */
+  color: #fff !important; /* Texto blanco */
+  font-weight: bold !important;
+  font-size: 20px !important; /* Ajustar tamaño de fuente */
+  border-radius: 8px !important; /* Bordes redondeados */
+  padding: 10px 20px !important; /* Reducir el padding para hacerlo más compacto */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* Sombra sutil */
+  text-align: center !important; /* Centrado del texto */
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease !important; /* Transiciones suaves */
+  cursor: pointer !important; /* Hacer que el botón sea clickeable */
+  display: block !important; /* Asegurarse que el botón ocupe el 50% del contenedor */
+}
+
+/* Efecto hover para el botón móvil */
+.signUpButton:hover {
+  background-color: #007bff !important; /* Fondo más oscuro cuando se pasa el ratón */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important; /* Sombra más intensa en hover */
+}
+
+/* Efecto focus para accesibilidad */
+.signUpButton:focus {
+  outline: none !important; /* Eliminar el borde predeterminado */
+  box-shadow: 0 0 0 3px rgba(0, 172, 255, 0.5) !important; /* Resaltado con contorno azul brillante */
+}
+
+/* Efecto active para cuando se presiona el botón */
+.signUpButton:active {
+  transform: translateY(1px) !important; /* Hundir ligeramente el botón */
+  background-color: #006fcc !important; /* Fondo aún más oscuro cuando se hace clic */
+}
+
+/* Estilos adicionales para retroalimentación */
+.input-valid {
+  border-color: #28a745; /* Verde cuando es válido */
+}
+
+.input-invalid {
+  border-color: #dc3545; /* Rojo cuando no es válido */
+}
+
+.input-feedback {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.input-error {
+  color: #dc3545;
+}
