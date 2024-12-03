@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./PostReview.module.css";
 
-
 function PostReview({ onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -45,7 +44,7 @@ function PostReview({ onClose }) {
                 placeholder="Añade un título"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                required
+                required // Solo el título es obligatorio
               />
             </div>
             <div className="mb-3">
@@ -56,10 +55,9 @@ function PostReview({ onClose }) {
                 className="form-control"
                 id="description"
                 rows="4"
-                placeholder="Escribe una descripción"
+                placeholder="Escribe una descripción (opcional)"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                required
               ></textarea>
             </div>
             <div className="mb-3">
