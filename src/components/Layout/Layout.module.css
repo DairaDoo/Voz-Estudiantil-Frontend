@@ -3,5 +3,10 @@
   background-color: #343a40; /* Color de fondo del footer */
   color: white;              /* Color del texto */
   padding: 1rem 0;          /* Espaciado vertical */
-  text-align: center;        /* Centrar el texto */
+  text-align: center;       /* Centrar el texto */
+}
+
+.layout {
+  position: relative; /* Asegúrate de que el layout tenga un contenedor relativo */
+  z-index: 1; /* Esto debería garantizar que el layout esté por debajo del OptionsContainer */
 }

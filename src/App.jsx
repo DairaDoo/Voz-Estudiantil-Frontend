@@ -1,11 +1,13 @@
 // App.jsx
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ModalProvider } from '@/components/NotLoggedIn/ModalContext';
-import Layout from '@/components/Layout/Layout';
-import HomePage from '@pages/HomePage/HomePage';
-import LoginPage from '@/pages/Login/Login';
-import SignUp from './pages/SignUp/SignUp';
-import ReviewsPage from './components/ShowReviews/ShowReviews';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ModalProvider } from "@/components/NotLoggedIn/ModalContext";
+import Layout from "@/components/Layout/Layout";
+import HomePage from "@pages/HomePage/HomePage";
+import LoginPage from "@/pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
+import ReviewsPage from "./components/ShowReviews/ShowReviews";
+
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
