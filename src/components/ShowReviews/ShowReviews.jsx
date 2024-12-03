@@ -6,6 +6,7 @@ const ShowReviews = () => {
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para saber si el usuario está logueado
   const [showModal, setShowModal] = useState(false); // Estado para mostrar el modal
+  const [userVotes, setUserVotes] = useState({}); // Para almacenar el voto del usuario por reseña
 
   useEffect(() => {
     // Verificar si el usuario está logueado con el token de localStorage
@@ -33,7 +34,12 @@ const ShowReviews = () => {
       setShowModal(true); // Mostrar el modal si no está logueado
       return; // Evitar seguir con el proceso de votación si no está logueado
     }
-  
+
+    // Verificar si el usuario ya votó en esta reseña
+    if (userVotes[reviewId] === type) {
+      return; // Evitar votar si ya votó de la misma manera
+    }
+
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(`http://localhost:5000/reviews/${reviewId}/votes`, {
@@ -44,12 +50,13 @@ const ShowReviews = () => {
         },
         body: JSON.stringify({ type }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Error en la solicitud");
       }
-  
+
+      // Actualizar los votos de la reseña
       const updatedReviews = reviews.map((review) => {
         if (review.review_id === reviewId) {
           if (type === "up") review.up_vote += 1;
@@ -57,7 +64,13 @@ const ShowReviews = () => {
         }
         return review;
       });
-  
+
+      // Actualizar el estado de los votos del usuario
+      setUserVotes((prevVotes) => ({
+        ...prevVotes,
+        [reviewId]: type, // Registrar el voto del usuario
+      }));
+
       updatedReviews.sort((a, b) => (b.up_vote - b.down_vote) - (a.up_vote - a.down_vote));
       setReviews(updatedReviews);
     } catch (err) {
@@ -65,7 +78,6 @@ const ShowReviews = () => {
       setError(err.message);
     }
   };
-  
 
   const handleComments = (reviewId) => {
     console.log(`Abrir sección de comentarios para el review ID: ${reviewId}`);
@@ -135,6 +147,7 @@ const ShowReviews = () => {
                     className="btn btn-sm btn-outline-primary me-2"
                     onClick={() => handleVote(review.review_id, "up")}
                     style={{ fontSize: "17px", padding: "6px 12px" }}
+                    disabled={userVotes[review.review_id] === "up"} // Deshabilitar si ya votó
                   >
                     <i className="bi bi-hand-thumbs-up-fill"></i>
                   </button>
@@ -147,6 +160,7 @@ const ShowReviews = () => {
                     className="btn btn-sm btn-outline-danger"
                     onClick={() => handleVote(review.review_id, "down")}
                     style={{ fontSize: "17px", padding: "6px 12px" }}
+                    disabled={userVotes[review.review_id] === "down"} // Deshabilitar si ya votó
                   >
                     <i className="bi bi-hand-thumbs-down-fill"></i>
                   </button>
@@ -166,7 +180,6 @@ const ShowReviews = () => {
       </div>
 
       <NotLoggedIn show={showModal} onClose={() => setShowModal(false)} />
-
     </div>
   );
 };
