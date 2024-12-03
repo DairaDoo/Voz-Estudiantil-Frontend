@@ -7,8 +7,8 @@ import HomePage from "@pages/HomePage/HomePage";
 import LoginPage from "@/pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import ReviewsPage from "./components/ShowReviews/ShowReviews";
-import NewPost from "./components/NewPost/NewPost"; // Botón flotante
-import ReviewForm from "./components/PostReview/PostReview"; // Formulario emergente
+import NewPost from "@/components/NewPost/NewPost"; // Botón flotante
+import ReviewForm from "@/components/PostReview/PostReview"; // Formulario emergente
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
