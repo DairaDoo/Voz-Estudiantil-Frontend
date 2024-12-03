@@ -54,6 +54,26 @@
   outline: none !important; /* Quitar contorno */
 }
 
+.greeting {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.logoutButton {
+  border-color: #d9534f;
+  color: #d9534f;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #d9534f;
+  color: white;
+}
+
+
+
 /* Ajuste para pantallas pequeñas */
 @media (max-width: 416px) {
   .searchContainer .search-input {

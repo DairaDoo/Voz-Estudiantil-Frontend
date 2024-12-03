@@ -1,42 +1,47 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom'; // Agregamos useNavigate para redirección
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '@/assets/images/VozEstudiantil_logo.png'; // Usa el alias definido en jsconfig.json
 import styles from './Login.module.css';
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate(); // Hook para manejar redirecciones
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Limpiamos errores previos
-
+    setError(''); // Limpiamos errores previos
+  
     try {
-      const response = await fetch("http://localhost:5000/users/login", {
-        method: "POST",
+      const response = await fetch('http://localhost:5000/users/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
+  
+        // Guardar el token y el nombre del usuario en localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userName', data.name); // Guardamos el nombre del usuario
+  
         alert(`¡Bienvenido ${data.name}! Log in exitoso.`);
-        navigate("/"); // Redirigimos al home después del login
+        navigate('/'); // Redirigimos al home después del login
       } else {
         const errorData = await response.json();
-        setError(errorData.error || "Error desconocido");
+        setError(errorData.error || 'Credenciales incorrectas');
       }
     } catch (err) {
-      console.error("Error al conectar con el servidor:", err);
-      setError("No se pudo conectar al servidor.");
+      console.error('Error al conectar con el servidor:', err);
+      setError('No se pudo conectar al servidor. Inténtalo más tarde.');
     }
   };
+  
 
   return (
     <Container
@@ -51,9 +56,9 @@ function LoginPage() {
               src={logo}
               alt="Logo"
               className="logo me-2"
-              style={{ width: "50px", marginRight: "8px" }}
+              style={{ width: '50px', marginRight: '8px' }}
             />
-            <h1 className="app-name" style={{ fontSize: "2rem", color: "#000000" }}>
+            <h1 className="app-name" style={{ fontSize: '2rem', color: '#000000' }}>
               Voz Estudiantil
             </h1>
           </Link>
@@ -95,7 +100,7 @@ function LoginPage() {
             </button>
 
             <p className="text-center mt-3">
-              ¿No tienes cuenta?{" "}
+              ¿No tienes cuenta?{' '}
               <Link to="/signup" className="text-decoration-none">
                 Regístrate aquí
               </Link>
