@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import styles from "./PostReview.module.css";
+import styles from "./PostEvent.module.css"; // Reutilizando estilos
 
-function PostReview({ onClose }) {
+function PostEvent({ onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
@@ -13,26 +15,31 @@ function PostReview({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica para enviar la reseña
-    console.log({ title, description, image });
-    alert("Reseña creada con éxito!");
+    // Lógica para enviar el evento
+    console.log({ title, description, date, location, image });
+    alert("Evento creado con éxito!");
     onClose(); // Cerrar el formulario
   };
 
   return (
     <div className={`position-fixed top-0 start-0 w-100 h-100 ${styles.overlay}`}>
       <div className="d-flex justify-content-center align-items-center h-100">
-        <div className="bg-white rounded p-4 shadow position-relative" style={{ maxWidth: "400px", width: "90%" }}>
-          {/* Botón para cerrar dentro del formulario */}
+        <div
+          className="bg-white rounded p-4 shadow-lg position-relative container"
+          style={{
+            width: "200%",
+            maxWidth: "500px", // Máximo tamaño en pantallas grandes
+            minWidth: "400px", // Tamaño mínimo para pantallas pequeñas
+          }}
+        >
+          {/* Botón para cerrar */}
           <div className="text-end">
-            <button
-              className="btn-close"
-              aria-label="Cerrar"
-              onClick={onClose}
-            ></button>
+            <button className="btn-close" aria-label="Cerrar" onClick={onClose}></button>
           </div>
+
           {/* Título */}
-          <h4 className="text-center mb-4">Crear Nueva Reseña</h4>
+          <h4 className="text-center mb-4">Crear Nuevo Evento</h4>
+
           {/* Formulario */}
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -46,7 +53,7 @@ function PostReview({ onClose }) {
                 placeholder="Añade un título"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                required // Solo el título es obligatorio
+                required
               />
             </div>
             <div className="mb-3">
@@ -56,11 +63,38 @@ function PostReview({ onClose }) {
               <textarea
                 className="form-control"
                 id="description"
-                rows="4"
-                placeholder="Escribe una descripción (opcional)"
+                rows="3"
+                placeholder="Escribe una descripción"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="date" className="form-label">
+                Fecha del Evento
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                id="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="location" className="form-label">
+                Lugar
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="location"
+                placeholder="Ejemplo: Auditorio Principal"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                required
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="image" className="form-label">
@@ -76,7 +110,7 @@ function PostReview({ onClose }) {
             </div>
             <div className="d-grid">
               <button type="submit" className="btn btn-primary">
-                Crear Reseña
+                Crear Evento
               </button>
             </div>
           </form>
@@ -86,4 +120,4 @@ function PostReview({ onClose }) {
   );
 }
 
-export default PostReview;
+export default PostEvent;

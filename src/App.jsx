@@ -5,6 +5,7 @@ import Layout from '@/components/Layout/Layout';
 import HomePage from '@pages/HomePage/HomePage';
 import LoginPage from '@/pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
+import EventPage from '@pages/EventsPage/EventsPage';
 import ReviewsPage from './components/ShowReviews/ShowReviews';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -17,7 +18,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/professors" element={<h1>Future Professors Section</h1>} />
-            <Route path="/events" element={<h1>Future Events Section</h1>} />
+            <Route path="/events" element={<EventPage />} />
           </Route>
 
           {/* Rutas fuera del Layout */}
