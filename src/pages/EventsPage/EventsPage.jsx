@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import OptionsContainer from "@/components/OptionsContainer/OptionsContainer";
 import ShowReviews from "@/components/ShowReviews/ShowReviews";
 import NewPost from "@/components/NewPost/NewPost"; // Botón flotante
-import PostReview from "@/components/PostReview/PostReview"; // Formulario emergente
+import PostEvent from "@/components/PostEvent/PostEvent"; // Formulario emergente
 
-function HomePage() {
+function EventPage() {
   const [showForm, setShowForm] = useState(false);
 
   // Funciones para manejar el estado del formulario
@@ -18,20 +18,20 @@ function HomePage() {
 
   return (
     <div>
+      <h1>Eventos Universitarios</h1>
+      <p>Explora los próximos eventos en tu universidad.</p>
 
       {/* Contenedor de opciones */}
       <OptionsContainer />
 
-      {/* Contenedor de reseñas */}
-      <ShowReviews />
 
       {/* Botón flotante */}
       <NewPost onClick={handleNewPostClick} />
 
       {/* Formulario emergente */}
-      {showForm && <PostReview onClose={handleCloseForm} />}
+      {showForm && <PostEvent onClose={handleCloseForm} />}
     </div>
   );
 }
 
-export default HomePage;
+export default EventPage;

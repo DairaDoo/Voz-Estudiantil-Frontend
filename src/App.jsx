@@ -1,14 +1,13 @@
 // App.jsx
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ModalProvider } from "@/components/NotLoggedIn/ModalContext";
-import Layout from "@/components/Layout/Layout";
-import HomePage from "@pages/HomePage/HomePage";
-import LoginPage from "@/pages/Login/Login";
-import SignUp from "./pages/SignUp/SignUp";
-import ReviewsPage from "./components/ShowReviews/ShowReviews";
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ModalProvider } from '@/components/NotLoggedIn/ModalContext';
+import Layout from '@/components/Layout/Layout';
+import HomePage from '@pages/HomePage/HomePage';
+import LoginPage from '@/pages/Login/Login';
+import SignUp from './pages/SignUp/SignUp';
+import ReviewsPage from './components/ShowReviews/ShowReviews';
 import "bootstrap-icons/font/bootstrap-icons.css";
+import EventPage from '@pages/EventsPage/EventsPage';
 
 function App() {
   return (
@@ -19,7 +18,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/professors" element={<h1>Future Professors Section</h1>} />
-            <Route path="/events" element={<h1>Future Events Section</h1>} />
+            <Route path="/events" element={<EventPage />} />
           </Route>
 
           {/* Rutas fuera del Layout */}

@@ -78,7 +78,7 @@ function CustomNavbar() {
           <>
             {/* En la versión de escritorio */}
             <div className="d-none d-lg-flex align-items-center">
-              <span className="me-3">Hola, {user}</span>
+              <span className="me-3"><b>Hola, {user}</b></span>
               <Button
                 variant="outline-danger"
                 onClick={handleLogoutClick}

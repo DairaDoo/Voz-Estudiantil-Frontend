@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Usamos el hook useNavigate para navegación en React Router
 import { FaBars, FaTimes } from 'react-icons/fa';  // Usamos iconos de react-icons para las flechas
-import styles from '@/components/Contenedor/OptionsContainer.module.css';  // Asegúrate de importar los estilos
+import styles from '@/components/OptionsContainer/OptionsContainer.module.css';  // Asegúrate de importar los estilos
 
 const OptionsContainer = () => {
   const [isOpen, setIsOpen] = useState(false); // El menú está cerrado por defecto
@@ -11,8 +11,7 @@ const OptionsContainer = () => {
   const options = [
     { id: 1, label: 'Home', route: '/' },
     { id: 2, label: 'Professors', route: '/professors' },
-    { id: 3, label: 'Events', route: '/events' },
-    { id: 4, label: 'Login', route: '/login' },
+    { id: 3, label: 'Events', route: '/events' }
   ];
 
   const handleClickOption = (route) => {

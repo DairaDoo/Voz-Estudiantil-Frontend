@@ -4,20 +4,19 @@ import styles from "./PostReview.module.css";
 import NotLoggedIn from "@/components/NotLoggedIn/NotLoggedIn";
 
 function PostReview({ onClose, apiUrl, onRefresh }) {
-  const [description, setDescription] = useState(""); // Descripción de la reseña
-  const [image, setImage] = useState(null); // Imagen de la reseña
-  const [userId, setUserId] = useState(""); // ID del usuario
-  const [universityId, setUniversityId] = useState(""); // ID de la universidad
-  const [universityName, setUniversityName] = useState(""); // Nombre de la universidad
-  const [campusId, setCampusId] = useState(""); // ID del campus
-  const [campusName, setCampusName] = useState(""); // Nombre del campus
-  const [universities, setUniversities] = useState([]); // Lista de universidades
-  const [campuses, setCampuses] = useState([]); // Lista de campus
-  const [state, setState] = useState("pendiente"); // Estado de la reseña
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
+  const [userId, setUserId] = useState("");
+  const [universityId, setUniversityId] = useState("");
+  const [universityName, setUniversityName] = useState("");
+  const [campusId, setCampusId] = useState("");
+  const [campusName, setCampusName] = useState("");
+  const [universities, setUniversities] = useState([]);
+  const [campuses, setCampuses] = useState([]);
+  const [state, setState] = useState("pendiente");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [loadingCampuses, setLoadingCampuses] = useState(false); // Cargando campus
+  const [loadingCampuses, setLoadingCampuses] = useState(false);
 
-  // Obtener datos del token y guardar en localStorage
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -27,22 +26,19 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
     try {
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
       setUserId(decodedToken.user_id);
-      setUniversityId(decodedToken.university_id);
-      localStorage.setItem("university_id", decodedToken.university_id);
+      setUniversityId(decodedToken.university_id || ""); // Manejar si no hay university_id
     } catch (error) {
       setIsLoggedIn(false);
     }
   }, []);
 
-  // Cargar lista de universidades
   useEffect(() => {
-    fetch(`http://localhost:5000/universities`) // Usamos apiUrl aquí
+    fetch(`http://localhost:5000/universities`)
       .then((response) => response.json())
       .then((data) => setUniversities(data))
       .catch((error) => console.error("Error al cargar universidades:", error));
   }, [apiUrl]);
 
-  // Obtener el nombre de la universidad
   useEffect(() => {
     if (universityId) {
       const selectedUniversity = universities.find(
@@ -50,51 +46,43 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
       );
       if (selectedUniversity) {
         setUniversityName(selectedUniversity.name);
-        handleUniversityChange(selectedUniversity.university_id); // Cargar campus
+        handleUniversityChange(selectedUniversity.university_id);
       }
     }
   }, [universityId, universities]);
 
-  // Manejar cambio de universidad
   const handleUniversityChange = (selectedUniversityId) => {
-    if (selectedUniversityId) {
-      setLoadingCampuses(true); // Mostrar indicador de carga
-      fetch(`http://localhost:5000/campuses?university_id=${selectedUniversityId}`, {
-        method: "GET",
+    setUniversityId(selectedUniversityId);
+    setLoadingCampuses(true);
+    fetch(`http://localhost:5000/campuses?university_id=${selectedUniversityId}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al obtener los datos del servidor");
+        }
+        return response.json();
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al obtener los datos del servidor");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setCampuses(data); // Actualizar lista de campus
-          setLoadingCampuses(false); // Detener carga
-        })
-        .catch((error) => {
-          console.error("Error al cargar campus:", error);
-          setCampuses([]); // No hay campus disponibles
-          setLoadingCampuses(false);
-        });
-    }
+      .then((data) => {
+        setCampuses(data);
+        setLoadingCampuses(false);
+      })
+      .catch((error) => {
+        console.error("Error al cargar campus:", error);
+        setCampuses([]);
+        setLoadingCampuses(false);
+      });
   };
 
-  // Manejar cambio de imagen
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
 
-  // Manejar envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!userId) {
       alert("Por favor, inicie sesión para crear una reseña.");
       return;
     }
 
-    // Validación de todos los campos antes de enviar
     if (!description || !universityId || !campusId) {
       alert("Por favor, complete todos los campos.");
       return;
@@ -106,19 +94,9 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
     formData.append("university_id", universityId);
     formData.append("state", state);
     if (image) {
-      formData.append("image", image); // Solo si se selecciona una imagen
+      formData.append("image", image);
     }
-    formData.append("campus_id", campusId);  // Enviar solo el ID del campus
-
-    // Agregar un console.log aquí para ver los datos que se están enviando
-    console.log("Datos a enviar:", {
-      review: description,
-      user_id: userId,
-      university_id: universityId,
-      state: state,
-      image: image ? image.name : null, // Solo muestra el nombre del archivo de imagen
-      campus_id: campusId,  // El ID del campus
-    });
+    formData.append("campus_id", campusId);
 
     try {
       const response = await fetch(`http://localhost:5000/reviews`, {
@@ -129,13 +107,10 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
       if (response.ok) {
         alert("Reseña creada con éxito!");
         onClose();
-        if (onRefresh) {
-          onRefresh();  // Llamar a la función de refresh para actualizar la lista
-        }
+        if (onRefresh) onRefresh();
       } else {
         const errorData = await response.json();
-        console.log("Error del servidor:", errorData);
-        alert(`Error: ${errorData.error || 'Ocurrió un error inesperado'}`);
+        alert(`Error: ${errorData.error || "Ocurrió un error inesperado"}`);
       }
     } catch (error) {
       console.error("Error al enviar reseña:", error);
@@ -164,39 +139,50 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
           ></button>
           <h4 className="text-center mb-4">Crear Nueva Reseña</h4>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="universityName" className="form-label">Universidad</label>
-              <input
-                type="text"
-                className="form-control"
-                id="universityName"
-                value={universityName}
-                disabled
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="campusId" className="form-label">Campus</label>
-              <select
-                className="form-control"
-                id="campusId"
-                value={campusId}
-                onChange={(e) => setCampusId(e.target.value)}
-                required
-              >
-                <option value="">Selecciona un campus</option>
-                {loadingCampuses ? (
-                  <option disabled>Cargando...</option>
-                ) : campuses.length > 0 ? (
-                  campuses.map((campus) => (
-                    <option key={campus.id} value={campus.id}>
-                      {campus.name}
+            {!universityId && (
+              <div className="mb-3">
+                <label htmlFor="universityId" className="form-label">Selecciona tu Universidad</label>
+                <select
+                  className="form-control"
+                  id="universityId"
+                  value={universityId}
+                  onChange={(e) => handleUniversityChange(e.target.value)}
+                  required
+                >
+                  <option value="">Selecciona una universidad</option>
+                  {universities.map((university) => (
+                    <option key={university.university_id} value={university.university_id}>
+                      {university.name}
                     </option>
-                  ))
-                ) : (
-                  <option key="no-campus" disabled>No hay campus disponibles</option>
-                )}
-              </select>
-            </div>
+                  ))}
+                </select>
+              </div>
+            )}
+            {universityId && (
+              <div className="mb-3">
+                <label htmlFor="campusId" className="form-label">Campus</label>
+                <select
+                  className="form-control"
+                  id="campusId"
+                  value={campusId}
+                  onChange={(e) => setCampusId(e.target.value)}
+                  required
+                >
+                  <option value="">Selecciona un campus</option>
+                  {loadingCampuses ? (
+                    <option disabled>Cargando...</option>
+                  ) : campuses.length > 0 ? (
+                    campuses.map((campus) => (
+                      <option key={campus.id} value={campus.id}>
+                        {campus.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>No hay campus disponibles</option>
+                  )}
+                </select>
+              </div>
+            )}
             <div className="mb-3">
               <label htmlFor="description" className="form-label">Descripción</label>
               <textarea
