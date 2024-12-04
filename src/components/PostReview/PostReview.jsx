@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./PostReview.module.css";
 import NotLoggedIn from "@/components/NotLoggedIn/NotLoggedIn";
 
-function PostReview({ onClose, apiUrl, onRefresh }) {
+function PostReview({ onClose, apiUrl }) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [userId, setUserId] = useState("");
@@ -26,7 +26,7 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
     try {
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
       setUserId(decodedToken.user_id);
-      setUniversityId(decodedToken.university_id || ""); // Manejar si no hay university_id
+      setUniversityId(decodedToken.university_id || "");
     } catch (error) {
       setIsLoggedIn(false);
     }
@@ -106,11 +106,9 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
 
       if (response.ok) {
         alert("Reseña creada con éxito!");
-        onClose();
-        if (onRefresh) onRefresh();
+        window.location.reload(); // Refrescar la página
       } else {
-        const errorData = await response.json();
-        alert(`Error: ${errorData.error || "Ocurrió un error inesperado"}`);
+        alert("Error al crear la reseña. Por favor, inténtelo nuevamente.");
       }
     } catch (error) {
       console.error("Error al enviar reseña:", error);
@@ -139,7 +137,18 @@ function PostReview({ onClose, apiUrl, onRefresh }) {
           ></button>
           <h4 className="text-center mb-4">Crear Nueva Reseña</h4>
           <form onSubmit={handleSubmit}>
-            {!universityId && (
+            {universityId ? (
+              <div className="mb-3">
+                <label htmlFor="universityName" className="form-label">Universidad</label>
+                <input
+                  type="text"
+                  id="universityName"
+                  className="form-control"
+                  value={universityName}
+                  readOnly
+                />
+              </div>
+            ) : (
               <div className="mb-3">
                 <label htmlFor="universityId" className="form-label">Selecciona tu Universidad</label>
                 <select
