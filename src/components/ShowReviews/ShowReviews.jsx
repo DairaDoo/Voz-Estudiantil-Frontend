@@ -83,6 +83,10 @@ const ShowReviews = () => {
     console.log(`Abrir sección de comentarios para el review ID: ${reviewId}`);
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false); // Cerrar el modal
+  };
+
   return (
     <div className="container mt-4">
       <h1 className="text-center mb-4">Reseñas</h1>
@@ -179,7 +183,13 @@ const ShowReviews = () => {
         ))}
       </div>
 
-      <NotLoggedIn show={showModal} onClose={() => setShowModal(false)} />
+      {showModal && (
+        <NotLoggedIn 
+          show={showModal} 
+          onClose={handleCloseModal} 
+          actionMessage="Para votar, necesitas estar logueado." 
+        />
+      )}
     </div>
   );
 };
