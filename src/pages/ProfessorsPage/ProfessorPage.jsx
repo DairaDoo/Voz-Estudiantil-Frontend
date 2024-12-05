@@ -60,10 +60,28 @@ function ProfessorPage() {
           setSuccessMessage("Gracias por evaluar al profesor.");
           setShowModal(false);
           setError("");
+
+          // Recargar los datos de profesores y preguntas
+          fetch("http://localhost:5000/professors/all")
+            .then((response) => response.json())
+            .then((data) => setProfessors(data.professors))
+            .catch(() => setError("Error al obtener los profesores."));
+
+          fetch("http://localhost:5000/professor_questions")
+            .then((response) => response.json())
+            .then((data) => setQuestions(data.questions))
+            .catch(() => setError("Error al obtener las preguntas."));
+
+          // Opcional: Si prefieres hacer un reload completo de la página
+          // window.location.reload();
         })
         .catch(() => setError("Error al enviar las respuestas."));
     });
   };
+
+  // Filtrar los profesores para eliminar duplicados
+  const uniqueProfessors = Array.from(new Set(professors.map((a) => a.professor_id)))
+    .map((id) => professors.find((a) => a.professor_id === id));
 
   return (
     <Container className="my-5">
@@ -73,7 +91,7 @@ function ProfessorPage() {
       {successMessage && <Alert variant="success" className="animated fadeIn">{successMessage}</Alert>}
 
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-        {professors.map((professor) => (
+        {uniqueProfessors.map((professor) => (
           <Col key={professor.professor_id}>
             <div className="card shadow-lg rounded border-0 h-100">
               <div className="card-body p-4">

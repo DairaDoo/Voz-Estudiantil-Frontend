@@ -6,19 +6,57 @@ function PostEvent({ onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
+  const [message, setMessage] = useState(""); // Para mostrar mensaje de éxito o error
+  const [loading, setLoading] = useState(false); // Para manejar el estado de carga
 
+  // Obtener user_id, university_id y el token de localStorage
+  const user_id = localStorage.getItem("user_id");
+  const university_id = localStorage.getItem("university_id");
+  const token = localStorage.getItem("token"); // Obtener el token del localStorage
+
+  // Manejar cambios en la imagen
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  // Manejar el envío del formulario
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Lógica para enviar el evento
-    console.log({ title, description, date, location, image });
-    alert("Evento creado con éxito!");
-    onClose(); // Cerrar el formulario
+    setMessage(""); // Reiniciar mensaje previo
+    setLoading(true); // Activar estado de carga
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("date", date);
+    formData.append("image", image); // Se adjunta la imagen como archivo
+    formData.append("user_id", user_id);
+    formData.append("university_id", university_id);
+
+    // Crear la fecha de creación en formato similar al JSON esperado
+    const create_date = new Date().toUTCString();
+
+    try {
+      const response = await fetch("http://localhost:5000/events", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`, // Agregar el token de autorización al encabezado
+        },
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Error al crear el evento");
+
+      const result = await response.json();
+      console.log(result);
+      setMessage("¡Evento creado con éxito!"); // Mensaje de éxito
+      onClose(); // Cerrar el formulario
+    } catch (err) {
+      setMessage(`Error: ${err.message}`); // Mostrar el error
+    } finally {
+      setLoading(false); // Desactivar el estado de carga
+    }
   };
 
   return (
@@ -83,20 +121,6 @@ function PostEvent({ onClose }) {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="location" className="form-label">
-                Lugar
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="location"
-                placeholder="Ejemplo: Auditorio Principal"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-3">
               <label htmlFor="image" className="form-label">
                 Imagen (opcional)
               </label>
@@ -108,9 +132,14 @@ function PostEvent({ onClose }) {
                 onChange={handleImageChange}
               />
             </div>
+            {message && (
+              <div className="alert alert-info text-center" role="alert">
+                {message}
+              </div>
+            )}
             <div className="d-grid">
-              <button type="submit" className="btn btn-primary">
-                Crear Evento
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? "Creando..." : "Crear Evento"}
               </button>
             </div>
           </form>
