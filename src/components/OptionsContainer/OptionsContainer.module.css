@@ -5,7 +5,7 @@
   left: -250px; /* Comienza fuera de la pantalla */
   height: 100vh; /* Ocupa toda la altura de la pantalla */
   width: 250px; /* Define el ancho del contenedor */
-  background-color: rgba(51, 51, 51, 0.9); /* Fondo semitransparente */
+  background-color: #6eb4ec !important; /* Fondo aún más oscuro cuando se hace clic */
   color: white; /* Color de texto blanco */
   padding: 20px; /* Relleno dentro del contenedor */
   z-index: 9999; /* Asegura que esté encima de otros elementos */
@@ -25,20 +25,20 @@
   top: 50%; /* Centrado verticalmente */
   left: 0; /* Pegado al borde izquierdo */
   transform: translateY(-50%); /* Ajusta para que esté completamente centrado */
-  background-color: #333; /* Fondo oscuro del botón */
+  background-color: #a31313; /* Fondo oscuro del botón */
   color: white;
   border: none;
   font-size: 28px; /* Tamaño de la flecha */
   padding: 10px; /* Espaciado alrededor */
   cursor: pointer;
   border-radius: 50%; /* Botón redondeado */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
+  box-shadow: 0 2px 8px rgba(10, 137, 187, 0.3); /* Sombra para darle profundidad */
   z-index: 10000; /* Asegura que esté encima de todo */
   transition: background-color 0.3s ease, transform 0.3s ease; /* Transición para el fondo y el movimiento */
 }
 
 .toggle_button:hover {
-  background-color: #555; /* Cambia el color al pasar el ratón */
+  background-color: #dde5ec !important; /* Fondo aún más oscuro cuando se hace clic */
   transform: translateY(-50%) scale(1.1); /* Efecto de zoom al pasar el ratón */
 }
 
@@ -61,10 +61,10 @@
 }
 
 .option_item:hover {
-  background-color: #444;
-  border-color: #777;
+  background-color: #132432 !important; /* Fondo aún más oscuro cuando se hace clic */
+  border-color: #19232b;
 }
 
 .option_item.active {
-  background-color: #555; /* Color activo para la opción seleccionada */
+  background-color: #3d4f5e; /* Color activo para la opción seleccionada */
 }
