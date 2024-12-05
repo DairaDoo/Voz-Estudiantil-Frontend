@@ -67,8 +67,8 @@
   transition: background-color 0.3s ease, color 0.3s ease;
   margin-bottom: 10px; /* Espaciado entre elementos */
 }
-
+ 
 .option_item:hover {
-  background-color: #ffffff; /* Fondo blanco al pasar el ratón */
-  color: #1e60f9; /* Texto azul */
+  background-color: #ffffff; 
+  color: #1e60f9; 
 }

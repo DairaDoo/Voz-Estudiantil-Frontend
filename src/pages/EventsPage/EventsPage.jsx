@@ -9,6 +9,18 @@ function EventPage() {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState("");
 
+  // Cambiar el favicon al cargar la página
+  useEffect(() => {
+    const favicon = document.querySelector("link[rel='icon']");
+    const originalFavicon = favicon.href; // Guardar el favicon original
+    favicon.href = "/logo-32x32.png"; // Ruta al favicon desde la carpeta `public`
+
+    // Restaurar el favicon original al desmontar el componente
+    return () => {
+      favicon.href = originalFavicon;
+    };
+  }, []);
+
   // Funciones para manejar el estado del formulario
   const handleNewPostClick = () => {
     setShowForm(true);

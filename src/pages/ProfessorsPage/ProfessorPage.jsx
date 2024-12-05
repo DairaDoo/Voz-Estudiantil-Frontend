@@ -12,6 +12,18 @@ function ProfessorPage() {
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
+    // Cambiar el favicon al montar la página
+    const favicon = document.querySelector("link[rel='icon']");
+    const originalFavicon = favicon.href;
+    favicon.href = "/logo-32x32.png"; // Ruta desde la carpeta public
+
+    // Restaurar el favicon original al desmontar el componente
+    return () => {
+      favicon.href = originalFavicon;
+    };
+  }, []);
+
+  useEffect(() => {
     fetch("https://voz-estudiantil-backend.onrender.com/professors/all")
       .then((response) => response.json())
       .then((data) => setProfessors(data.professors))
@@ -71,9 +83,6 @@ function ProfessorPage() {
             .then((response) => response.json())
             .then((data) => setQuestions(data.questions))
             .catch(() => setError("Error al obtener las preguntas."));
-
-          // Opcional: Si prefieres hacer un reload completo de la página
-          // window.location.reload();
         })
         .catch(() => setError("Error al enviar las respuestas."));
     });
