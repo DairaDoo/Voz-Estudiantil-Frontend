@@ -35,7 +35,7 @@ function SignUp() {
   useEffect(() => {
     const fetchUniversities = async () => {
       try {
-        const response = await fetch("https://voz-estudiantil-backend.onrender.com/universities");
+        const response = await fetch("https://voz-estudiantil-backend-production.up.railway.app/universities");
         if (!response.ok) {
           throw new Error("Error al obtener universidades");
         }
@@ -126,7 +126,7 @@ function SignUp() {
 
     try {
       const response = await fetch(
-        "https://voz-estudiantil-backend.onrender.com/users/create_user",
+        "https://voz-estudiantil-backend-production.up.railway.app/users/create_user",
         {
           method: "POST",
           headers: {

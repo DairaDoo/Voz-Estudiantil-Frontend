@@ -15,7 +15,7 @@ const ShowReviews = () => {
 
     const fetchReviews = async () => {
       try {
-        const response = await fetch("https://voz-estudiantil-backend.onrender.com/reviews_with_names");
+        const response = await fetch("https://voz-estudiantil-backend-production.up.railway.app/reviews_with_names");
         if (!response.ok) throw new Error("Error al obtener los reviews");
         const data = await response.json();
         // Ordenar reseñas por la diferencia entre up_vote y down_vote
@@ -42,7 +42,7 @@ const ShowReviews = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`https://voz-estudiantil-backend.onrender.com/reviews/${reviewId}/votes`, {
+      const response = await fetch(`https://voz-estudiantil-backend-production.up.railway.app/reviews/${reviewId}/votes`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
