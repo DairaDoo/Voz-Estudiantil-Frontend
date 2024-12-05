@@ -17,6 +17,8 @@ function PostReview({ onClose, apiUrl }) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [loadingCampuses, setLoadingCampuses] = useState(false);
 
+  const MAX_DESCRIPTION_LENGTH = 1500;
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -129,17 +131,19 @@ function PostReview({ onClose, apiUrl }) {
   return (
     <div className={`position-fixed top-0 start-0 w-100 h-100 ${styles.overlay}`}>
       <div className="d-flex justify-content-center align-items-center h-100">
-        <div className="bg-white rounded p-4 shadow" style={{ maxWidth: "400px", width: "90%" }}>
+        <div className="bg-white rounded p-4 shadow position-relative" style={{ maxWidth: "400px", width: "90%" }}>
+          {/* Botón de cerrar dentro del formulario */}
           <button
             className="btn-close position-absolute top-0 end-0 m-3"
             aria-label="Cerrar"
             onClick={onClose}
+            style={{ zIndex: 10 }}
           ></button>
           <h4 className="text-center mb-4">Crear Nueva Reseña</h4>
           <form onSubmit={handleSubmit}>
             {universityId ? (
               <div className="mb-3">
-                <label htmlFor="universityName" className="form-label">Universidad</label>
+                <label htmlFor="universityName" className="form-label">Universidad:</label>
                 <input
                   type="text"
                   id="universityName"
@@ -150,7 +154,7 @@ function PostReview({ onClose, apiUrl }) {
               </div>
             ) : (
               <div className="mb-3">
-                <label htmlFor="universityId" className="form-label">Selecciona tu Universidad</label>
+                <label htmlFor="universityId" className="form-label">Selecciona tu Universidad:</label>
                 <select
                   className="form-control"
                   id="universityId"
@@ -169,7 +173,7 @@ function PostReview({ onClose, apiUrl }) {
             )}
             {universityId && (
               <div className="mb-3">
-                <label htmlFor="campusId" className="form-label">Campus</label>
+                <label htmlFor="campusId" className="form-label">Campus:</label>
                 <select
                   className="form-control"
                   id="campusId"
@@ -193,7 +197,7 @@ function PostReview({ onClose, apiUrl }) {
               </div>
             )}
             <div className="mb-3">
-              <label htmlFor="description" className="form-label">Descripción</label>
+              <label htmlFor="description" className="form-label">Descripción:</label>
               <textarea
                 className="form-control"
                 id="description"
@@ -201,11 +205,15 @@ function PostReview({ onClose, apiUrl }) {
                 placeholder="Escribe una reseña..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                maxLength={MAX_DESCRIPTION_LENGTH}
                 required
               ></textarea>
+              <small className="text-muted">
+                {description.length}/{MAX_DESCRIPTION_LENGTH} caracteres
+              </small>
             </div>
             <div className="mb-3">
-              <label htmlFor="image" className="form-label">Imagen</label>
+              <label htmlFor="image" className="form-label">Imagen (opcional):</label>
               <input
                 type="file"
                 className="form-control"
@@ -214,9 +222,7 @@ function PostReview({ onClose, apiUrl }) {
                 onChange={handleImageChange}
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100">
-              Enviar Reseña
-            </button>
+            <button type="submit" className={styles.sendReviewButton}>Enviar Reseña</button>
           </form>
         </div>
       </div>

@@ -205,7 +205,7 @@ function SignUp() {
             {focusField === "username" && (
               <small className="text-muted d-block">
                 - Menos de 10 caracteres.<br />
-                - Sin información personal como tu nombre.
+                - Sin información personal como tu nombre o apellido.
               </small>
             )}
             {errors.username && (
