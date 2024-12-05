@@ -36,7 +36,7 @@ function PostEvent({ onClose }) {
           className="bg-white rounded p-4 shadow-lg position-relative container-fluid"
           style={{
             width: "90%", // Ajuste responsivo del ancho (90% del viewport)
-            maxWidth: "600px", // Tamaño máximo del ancho
+            maxWidth: "500px", // Tamaño máximo del ancho
             height: "auto", // Altura dinámica basada en el contenido
             maxHeight: "90vh", // Tamaño máximo de altura (90% del viewport height)
             overflowY: "auto", // Scroll en caso de contenido excesivo
