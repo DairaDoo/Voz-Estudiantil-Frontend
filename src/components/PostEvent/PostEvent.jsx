@@ -38,7 +38,7 @@ function PostEvent({ onClose }) {
     const create_date = new Date().toUTCString();
 
     try {
-      const response = await fetch("http://localhost:5000/events", {
+      const response = await fetch("https://voz-estudiantil-backend.onrender.com/events", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // Agregar el token de autorización al encabezado

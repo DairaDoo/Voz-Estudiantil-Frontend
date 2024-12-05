@@ -24,7 +24,7 @@ function SignUp() {
   useEffect(() => {
     const fetchUniversities = async () => {
       try {
-        const response = await fetch("http://localhost:5000/universities");
+        const response = await fetch("https://voz-estudiantil-backend.onrender.com/universities");
         if (!response.ok) {
           throw new Error("Error al obtener universidades");
         }
@@ -121,7 +121,7 @@ function SignUp() {
     });
   
     try {
-      const response = await fetch("http://localhost:5000/users/create_user", {
+      const response = await fetch("https://voz-estudiantil-backend.onrender.com/users/create_user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

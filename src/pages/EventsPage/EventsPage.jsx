@@ -21,7 +21,7 @@ function EventPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:5000/events"); // Cambia la URL si es necesario
+        const response = await fetch("https://voz-estudiantil-backend.onrender.com/events"); // Cambia la URL si es necesario
         if (!response.ok) throw new Error("Error al obtener los eventos");
         const data = await response.json();
         setEvents(data);
