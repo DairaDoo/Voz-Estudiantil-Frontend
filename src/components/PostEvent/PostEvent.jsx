@@ -6,6 +6,7 @@ function PostEvent({ onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState(""); // Nueva variable de estado para la hora
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
 
@@ -15,8 +16,15 @@ function PostEvent({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validación de la imagen
+    if (!image) {
+      alert("Por favor, sube una imagen para el evento.");
+      return;
+    }
+
     // Lógica para enviar el evento
-    console.log({ title, description, date, location, image });
+    console.log({ title, description, date, time, location, image });
     alert("Evento creado con éxito!");
     onClose(); // Cerrar el formulario
   };
@@ -25,11 +33,13 @@ function PostEvent({ onClose }) {
     <div className={`position-fixed top-0 start-0 w-100 h-100 ${styles.overlay}`}>
       <div className="d-flex justify-content-center align-items-center h-100">
         <div
-          className="bg-white rounded p-4 shadow-lg position-relative container"
+          className="bg-white rounded p-4 shadow-lg position-relative container-fluid"
           style={{
-            width: "200%",
-            maxWidth: "500px", // Máximo tamaño en pantallas grandes
-            minWidth: "400px", // Tamaño mínimo para pantallas pequeñas
+            width: "90%", // Ajuste responsivo del ancho (90% del viewport)
+            maxWidth: "600px", // Tamaño máximo del ancho
+            height: "auto", // Altura dinámica basada en el contenido
+            maxHeight: "90vh", // Tamaño máximo de altura (90% del viewport height)
+            overflowY: "auto", // Scroll en caso de contenido excesivo
           }}
         >
           {/* Botón para cerrar */}
@@ -44,7 +54,7 @@ function PostEvent({ onClose }) {
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
-                Título
+                Título:
               </label>
               <input
                 type="text"
@@ -58,7 +68,7 @@ function PostEvent({ onClose }) {
             </div>
             <div className="mb-3">
               <label htmlFor="description" className="form-label">
-                Descripción
+                Descripción:
               </label>
               <textarea
                 className="form-control"
@@ -67,11 +77,13 @@ function PostEvent({ onClose }) {
                 placeholder="Escribe una descripción"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
+                maxLength="1500" // Establece el límite de caracteres
+              />
+              <small className="text-muted">{description.length} / 1500 caracteres</small>
             </div>
             <div className="mb-3">
               <label htmlFor="date" className="form-label">
-                Fecha del Evento
+                Fecha del Evento:
               </label>
               <input
                 type="date"
@@ -83,8 +95,21 @@ function PostEvent({ onClose }) {
               />
             </div>
             <div className="mb-3">
+              <label htmlFor="time" className="form-label">
+                Hora del Evento:
+              </label>
+              <input
+                type="time"
+                className="form-control"
+                id="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-3">
               <label htmlFor="location" className="form-label">
-                Lugar
+                Lugar:
               </label>
               <input
                 type="text"
@@ -98,7 +123,7 @@ function PostEvent({ onClose }) {
             </div>
             <div className="mb-3">
               <label htmlFor="image" className="form-label">
-                Imagen (opcional)
+                Imagen:
               </label>
               <input
                 type="file"
@@ -106,10 +131,11 @@ function PostEvent({ onClose }) {
                 id="image"
                 accept="image/*"
                 onChange={handleImageChange}
+                required // Marcamos el campo como obligatorio para HTML
               />
             </div>
             <div className="d-grid">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className={`btn ${styles.createEventButton}`}>
                 Crear Evento
               </button>
             </div>

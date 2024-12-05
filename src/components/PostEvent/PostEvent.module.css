@@ -1,5 +1,47 @@
+/* Estilo para el botón de "Crear Evento" */
+.createEventButton {
+  width: 50% !important; /* Ajustar el tamaño del botón */
+  margin: 0 auto 15px !important; /* Centrar el botón horizontalmente */
+  background-color: #00aaff !important; /* Azul brillante para destacar */
+  border: 1.5px solid #007bff !important; /* Contorno con un tono más oscuro */
+  color: #fff !important; /* Texto blanco */
+  font-weight: bold !important;
+  font-size: 20px !important; /* Ajustar tamaño de fuente */
+  border-radius: 8px !important; /* Bordes redondeados */
+  padding: 10px 20px !important; /* Reducir el padding para hacerlo más compacto */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important; /* Sombra sutil */
+  text-align: center !important; /* Centrado del texto */
+  transition: background-color 0.3s ease, transform 0.2s ease,
+    box-shadow 0.3s ease !important; /* Transiciones suaves */
+  cursor: pointer !important; /* Hacer que el botón sea clickeable */
+  display: block !important; /* Asegurarse que el botón ocupe el 50% del contenedor */
+}
+
+/* Efecto hover para el botón */
+.createEventButton:hover {
+  background-color: #007bff !important; /* Fondo más oscuro cuando se pasa el ratón */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important; /* Sombra más intensa en hover */
+}
+
+/* Efecto focus para accesibilidad */
+.createEventButton:focus {
+  outline: none !important; /* Eliminar el borde predeterminado */
+  box-shadow: 0 0 0 3px rgba(0, 172, 255, 0.5) !important; /* Resaltado con contorno azul brillante */
+}
+
+/* Efecto active para cuando se presiona el botón */
+.createEventButton:active {
+  transform: translateY(1px) !important; /* Hundir ligeramente el botón */
+  background-color: #006fcc !important; /* Fondo aún más oscuro cuando se hace clic */
+}
+
+/* Mantener el estilo del overlay */
 .overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1050;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+  z-index: 1050; /* Asegurar que el overlay esté sobre el contenido */
+}
