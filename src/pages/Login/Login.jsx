@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '@/assets/images/VozEstudiantil_logo.png'; // Usa el alias definido en jsconfig.json
@@ -9,6 +9,18 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Hook para manejar redirecciones
+
+  useEffect(() => {
+    // Cambiar el favicon al montar la página
+    const favicon = document.querySelector("link[rel='icon']");
+    const originalFavicon = favicon.href;
+    favicon.href = "/logo-32x32.png"; // Ruta desde la carpeta public
+
+    // Restaurar el favicon original al desmontar el componente
+    return () => {
+      favicon.href = originalFavicon;
+    };
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
