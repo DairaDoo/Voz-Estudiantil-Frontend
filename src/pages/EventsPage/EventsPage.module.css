@@ -1,0 +1,14 @@
+/* Asegúrate de que el botón esté siempre a la derecha de la pantalla y por encima del contenido */
+.floatingButtonContainer {
+    position: fixed;
+    bottom: 20px; /* Ajusta la distancia desde el borde inferior */
+    right: 20px;  /* Ajusta la distancia desde el borde derecho */
+    z-index: 1050; /* Asegúrate de que el botón esté por encima de otros contenidos */
+  }
+  
+  /* Agregar algún espacio extra si lo deseas */
+  .floatingButtonContainer .btn {
+    position: relative;
+    z-index: 1051; /* Para asegurarse que el botón esté por encima del overlay */
+  }
+  
