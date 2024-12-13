@@ -35,7 +35,7 @@ function PostReview({ onClose, apiUrl }) {
   }, []);
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/universities`)
+    fetch(`https://voz-estudiantil-backend.onrender.com/universities`)
       .then((response) => response.json())
       .then((data) => setUniversities(data))
       .catch((error) => console.error("Error al cargar universidades:", error));
@@ -56,7 +56,7 @@ function PostReview({ onClose, apiUrl }) {
   const handleUniversityChange = (selectedUniversityId) => {
     setUniversityId(selectedUniversityId);
     setLoadingCampuses(true);
-    fetch(`http://127.0.0.1:5000/campuses?university_id=${selectedUniversityId}`)
+    fetch(`https://voz-estudiantil-backend.onrender.com/campuses?university_id=${selectedUniversityId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error al obtener los datos del servidor");
@@ -101,7 +101,7 @@ function PostReview({ onClose, apiUrl }) {
     formData.append("campus_id", campusId);
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/reviews`, {
+      const response = await fetch(`https://voz-estudiantil-backend.onrender.com/reviews`, {
         method: "POST",
         body: formData,
       });
