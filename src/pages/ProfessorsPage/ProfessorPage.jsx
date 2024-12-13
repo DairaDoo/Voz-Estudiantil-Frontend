@@ -24,12 +24,12 @@ function ProfessorPage() {
   }, []);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/professors/all")
+    fetch("https://voz-estudiantil-backend.onrender.com/professors/all")
       .then((response) => response.json())
       .then((data) => setProfessors(data.professors))
       .catch(() => setError("Error al obtener los profesores."));
 
-    fetch("http://127.0.0.1:5000/professor_questions")
+    fetch("https://voz-estudiantil-backend.onrender.com/professor_questions")
       .then((response) => response.json())
       .then((data) => setQuestions(data.questions))
       .catch(() => setError("Error al obtener las preguntas."));
@@ -55,7 +55,7 @@ function ProfessorPage() {
     }
 
     questions.forEach((question) => {
-      fetch("http://127.0.0.1:5000/responses", {
+      fetch("https://voz-estudiantil-backend.onrender.com/responses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,12 +74,12 @@ function ProfessorPage() {
           setError("");
 
           // Recargar los datos de profesores y preguntas
-          fetch("http://127.0.0.1:5000/professors/all")
+          fetch("https://voz-estudiantil-backend.onrender.com/professors/all")
             .then((response) => response.json())
             .then((data) => setProfessors(data.professors))
             .catch(() => setError("Error al obtener los profesores."));
 
-          fetch("http://127.0.0.1:5000/professor_questions")
+          fetch("https://voz-estudiantil-backend.onrender.com/professor_questions")
             .then((response) => response.json())
             .then((data) => setQuestions(data.questions))
             .catch(() => setError("Error al obtener las preguntas."));
