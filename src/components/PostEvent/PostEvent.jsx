@@ -1,69 +1,98 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./PostEvent.module.css"; // Reutilizando estilos
+import NotLoggedIn from "@/components/NotLoggedIn/NotLoggedIn";
 
 function PostEvent({ onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
   const [image, setImage] = useState(null);
-  const [message, setMessage] = useState(""); // Para mostrar mensaje de éxito o error
-  const [loading, setLoading] = useState(false); // Para manejar el estado de carga
+  const [userId, setUserId] = useState("");
+  const [universityId, setUniversityId] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  // Obtener user_id, university_id y el token de localStorage
-  const user_id = localStorage.getItem("user_id");
-  const university_id = localStorage.getItem("university_id");
-  const token = localStorage.getItem("token"); // Obtener el token del localStorage
+  const apiUrl = "http://localhost:5000"; // URL de la API con puerto 5000
+  const MAX_DESCRIPTION_LENGTH = 1500;
 
-  // Manejar cambios en la imagen
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setIsLoggedIn(false);
+      return;
+    }
+    try {
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      setUserId(decodedToken.user_id);
+      setUniversityId(decodedToken.university_id || "");
+    } catch (error) {
+      setIsLoggedIn(false);
+    }
+  }, []);
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
 
-  // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(""); // Reiniciar mensaje previo
-    setLoading(true); // Activar estado de carga
+
+    if (!userId) {
+      alert("Por favor, inicie sesión para crear un evento.");
+      return;
+    }
+
+    if (!title || !description) {
+      alert("Por favor, complete todos los campos requeridos.");
+      return;
+    }
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("date", date);
-    formData.append("image", image); // Se adjunta la imagen como archivo
-    formData.append("user_id", user_id);
-    formData.append("university_id", university_id);
-
-    // Crear la fecha de creación en formato similar al JSON esperado
-    const create_date = new Date().toUTCString();
+    formData.append("user_id", userId);
+    formData.append("university_id", universityId);
+    if (image) {
+      formData.append("image", image);
+    }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/events", {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${apiUrl}/events`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`, // Agregar el token de autorización al encabezado
+          Authorization: `Bearer ${token}`,
         },
         body: formData,
       });
 
-      if (!response.ok) throw new Error("Error al crear el evento");
-
-      const result = await response.json();
-      console.log(result);
-      setMessage("¡Evento creado con éxito!"); // Mensaje de éxito
-      onClose(); // Cerrar el formulario
-    } catch (err) {
-      setMessage(`Error: ${err.message}`); // Mostrar el error
-    } finally {
-      setLoading(false); // Desactivar el estado de carga
+      if (response.ok) {
+        alert("Evento creado con éxito!");
+        window.location.reload();
+      } else {
+        const errorData = await response.json();
+        alert(`Error al crear el evento: ${errorData.error || "Intenta nuevamente."}`);
+      }
+    } catch (error) {
+      console.error("Error al enviar evento:", error);
+      alert("Hubo un problema al enviar el evento. Intenta nuevamente.");
     }
   };
+
+  if (!isLoggedIn) {
+    return (
+      <NotLoggedIn
+        show={true}
+        onClose={onClose}
+        actionMessage="Para crear un evento, necesitas estar logueado."
+      />
+    );
+  }
 
   return (
     <div className={`position-fixed top-0 start-0 w-100 h-100 ${styles.overlay}`}>
       <div className="d-flex justify-content-center align-items-center h-100">
         <div
-          className="bg-white rounded p-4 shadow-lg position-relative container-fluid"
+          className={`bg-white rounded p-4 shadow-lg position-relative container-fluid ${styles.formContainer}`}
           style={{
             width: "90%", // Ajuste responsivo del ancho (90% del viewport)
             maxWidth: "500px", // Tamaño máximo del ancho
@@ -84,13 +113,13 @@ function PostEvent({ onClose }) {
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="title" className="form-label">
-                Título:
+                Título del Evento:
               </label>
               <input
                 type="text"
-                className="form-control"
                 id="title"
-                placeholder="Añade un título"
+                className="form-control"
+                placeholder="Ingresa el título del evento"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
@@ -103,30 +132,20 @@ function PostEvent({ onClose }) {
               <textarea
                 className="form-control"
                 id="description"
-                rows="3"
-                placeholder="Escribe una descripción"
+                rows="4"
+                placeholder="Escribe una descripción del evento..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                maxLength="1500" // Establece el límite de caracteres
-              />
-              <small className="text-muted">{description.length} / 1500 caracteres</small>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="date" className="form-label">
-                Fecha del Evento:
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                id="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                maxLength={MAX_DESCRIPTION_LENGTH}
                 required
-              />
+              ></textarea>
+              <small className="text-muted">
+                {description.length}/{MAX_DESCRIPTION_LENGTH} caracteres
+              </small>
             </div>
             <div className="mb-3">
               <label htmlFor="image" className="form-label">
-                Imagen:
+                Imagen (opcional):
               </label>
               <input
                 type="file"
@@ -134,19 +153,11 @@ function PostEvent({ onClose }) {
                 id="image"
                 accept="image/*"
                 onChange={handleImageChange}
-                required // Marcamos el campo como obligatorio para HTML
               />
             </div>
-            {message && (
-              <div className="alert alert-info text-center" role="alert">
-                {message}
-              </div>
-            )}
-            <div className="d-grid">
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? "Creando..." : "Crear Evento"}
-              </button>
-            </div>
+            <button type="submit" className={`btn btn-primary ${styles.sendEventButton}`}>
+              Crear Evento
+            </button>
           </form>
         </div>
       </div>

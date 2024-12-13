@@ -3,6 +3,7 @@ import OptionsContainer from "@/components/OptionsContainer/OptionsContainer";
 import NewPost from "@/components/NewPost/NewPost"; // Botón flotante
 import PostEvent from "@/components/PostEvent/PostEvent"; // Formulario emergente
 import "bootstrap/dist/css/bootstrap.min.css";
+import styles from "@/pages/EventsPage/EventsPage.module.css"; // Asegúrate de tener este archivo CSS
 
 function EventPage() {
   const [showForm, setShowForm] = useState(false);
@@ -54,7 +55,7 @@ function EventPage() {
       <OptionsContainer />
 
       {/* Botón flotante */}
-      <div className="text-center mt-4">
+      <div className={`${styles.floatingButtonContainer}`}>
         <NewPost onClick={handleNewPostClick} />
       </div>
 
