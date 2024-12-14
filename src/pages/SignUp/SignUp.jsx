@@ -13,18 +13,29 @@ function SignUp() {
   });
   const [universities, setUniversities] = useState([]); // Estado para almacenar las universidades
   const navigate = useNavigate();
-
   const [focusField, setFocusField] = useState("");
   const [errors, setErrors] = useState({
     username: "",
     password: "",
   });
 
+  // Cambiar el favicon al montar el componente
+  useEffect(() => {
+    const favicon = document.querySelector("link[rel='icon']");
+    const originalFavicon = favicon.href;
+    favicon.href = "/logo-32x32.png"; // Ruta desde la carpeta public
+
+    // Restaurar el favicon original al desmontar el componente
+    return () => {
+      favicon.href = originalFavicon;
+    };
+  }, []);
+
   // Fetch para obtener las universidades al montar el componente
   useEffect(() => {
     const fetchUniversities = async () => {
       try {
-        const response = await fetch("http://localhost:5000/universities");
+        const response = await fetch("https://voz-estudiantil-backend.onrender.com/universities");
         if (!response.ok) {
           throw new Error("Error al obtener universidades");
         }
@@ -43,7 +54,7 @@ function SignUp() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Si el campo es "university" y se selecciona "No especificar", asignamos null
     if (name === "university" && value === "") {
       setFormData({
@@ -109,39 +120,34 @@ function SignUp() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-  
+
     // Si no se selecciona una universidad, se enviará null
-    const universityId = formData.university || null;  // En caso de que sea "", se convierte en null
-  
-    console.log("Datos enviados al backend:", {
-      name: formData.username,
-      email: formData.email,
-      password: formData.password,
-      university_id: universityId, // Si no se seleccionó universidad, se enviará null
-    });
-  
+    const universityId = formData.university || null; // En caso de que sea "", se convierte en null
+
     try {
-      const response = await fetch("http://localhost:5000/users/create_user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.username,
-          email: formData.email,
-          password: formData.password,
-          university_id: universityId, // Se enviará null si no se seleccionó universidad
-        }),
-      });
-  
+      const response = await fetch(
+        "https://voz-estudiantil-backend.onrender.com/users/create_user",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.username,
+            email: formData.email,
+            password: formData.password,
+            university_id: universityId, // Se enviará null si no se seleccionó universidad
+          }),
+        }
+      );
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Error al registrar el usuario");
       }
-  
+
       const data = await response.json();
-      console.log("Usuario registrado:", data);
-  
+
       navigate("/"); // Redirige al homepage
       alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
     } catch (error) {
@@ -205,7 +211,7 @@ function SignUp() {
             {focusField === "username" && (
               <small className="text-muted d-block">
                 - Menos de 10 caracteres.<br />
-                - Sin información personal como tu nombre.
+                - Sin información personal como tu nombre o apellido.
               </small>
             )}
             {errors.username && (
@@ -236,9 +242,9 @@ function SignUp() {
             />
             {focusField === "password" && (
               <small className="text-muted d-block">
-                - Al menos una mayúscula<br/>
-                - Al menos una letra minúscula<br/>
-                - Al menos un número<br/>
+                - Al menos una mayúscula<br />
+                - Al menos una letra minúscula<br />
+                - Al menos un número<br />
                 - Al menos un carácter especial
               </small>
             )}

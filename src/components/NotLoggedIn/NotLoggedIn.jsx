@@ -1,6 +1,6 @@
 import React from "react";
 
-const NotLoggedIn = ({ show, onClose }) => {
+const NotLoggedIn = ({ show, onClose, actionMessage }) => {
   if (!show) return null;
 
   return (
@@ -20,7 +20,7 @@ const NotLoggedIn = ({ show, onClose }) => {
             ></button>
           </div>
           <div className="modal-body">
-            <p>Para votar, necesitas tener una cuenta y estar logueado.</p>
+            <p>{actionMessage}</p>
             <p>¡Regístrate ahora y participa!</p>
           </div>
           <div className="modal-footer">

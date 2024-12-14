@@ -1,0 +1,74 @@
+.options_container {
+  position: fixed; /* Fija el contenedor a la pantalla */
+  top: 0; /* Alineado con la parte superior */
+  left: -250px; /* Comienza fuera de la pantalla */
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  width: 250px; /* Define el ancho del contenedor */
+  background-color: #6eb4ec; /* Fondo del contenedor */
+  color: white; /* Color de texto blanco */
+  padding: 20px; /* Relleno dentro del contenedor */
+  z-index: 9999; /* Asegura que esté encima de otros elementos */
+  transition: transform 0.3s ease-in-out; /* Animación suave */
+}
+
+.options_container.open {
+  transform: translateX(250px); /* Desliza el menú hacia la derecha cuando se abre */
+}
+
+.toggle_button {
+  position: fixed; /* El botón siempre en la pantalla */
+  top: 50%; /* Centrado verticalmente */
+  left: 0; /* Pegado al borde izquierdo */
+  transform: translateY(-50%); /* Ajusta para que esté completamente centrado */
+  background-color: #ffffff; /* Fondo oscuro del botón */
+  color: rgb(0, 0, 0);
+  border: none;
+  font-size: 20px; /* Tamaño de la flecha */
+  padding-left: 10px; /* Espaciado interno a la izquierda */
+  padding-right: 10px; /* Espaciado interno a la derecha */
+  height: 45px; /* Altura ajustable */
+  width: auto;
+  cursor: pointer;
+  border-radius: 10%; /* Botón redondeado */
+  box-shadow: 0 2px 8px rgba(10, 137, 187, 0.3); /* Sombra para darle profundidad */
+  z-index: 10000; /* Asegura que esté encima de todo */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transición para el fondo y el movimiento */
+}
+
+.rectangle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Alineación superior */
+  background-color: #ffffff; /* Fondo blanco */
+  border: 2px solid #007bff; /* Borde azul */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  margin: 20px auto; /* Centra horizontalmente y agrega un margen superior */
+  width: 90%; /* Ancho relativo a la pantalla */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+}
+
+.option_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; /* Ocupa todo el ancho del rectángulo */
+}
+
+.option_item {
+  cursor: pointer;
+  padding: 15px 20px; /* Espaciado interno de las opciones */
+  background-color: #1e60f9; /* Fondo azul */
+  color: white; /* Texto blanco */
+  text-align: center; /* Texto centrado */
+  border: 1px solid #ffffff; /* Borde blanco */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-bottom: 10px; /* Espaciado entre elementos */
+}
+ 
+.option_item:hover {
+  background-color: #ffffff; 
+  color: #1e60f9; 
+}

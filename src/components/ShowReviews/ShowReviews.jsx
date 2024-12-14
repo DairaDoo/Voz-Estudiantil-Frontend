@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NotLoggedIn from "@/components/NotLoggedIn/NotLoggedIn";
+import ShowReviewCommentsModal from "@/components/ShowReviewCommentsModal/ShowReviewCommentsModal";
 
 const ShowReviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -7,6 +8,7 @@ const ShowReviews = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para saber si el usuario está logueado
   const [showModal, setShowModal] = useState(false); // Estado para mostrar el modal
   const [userVotes, setUserVotes] = useState({}); // Para almacenar el voto del usuario por reseña
+  const [selectedReviewId, setSelectedReviewId] = useState(null); // Reseña seleccionada para mostrar comentarios
 
   useEffect(() => {
     // Verificar si el usuario está logueado con el token de localStorage
@@ -15,7 +17,7 @@ const ShowReviews = () => {
 
     const fetchReviews = async () => {
       try {
-        const response = await fetch("http://localhost:5000/reviews_with_names");
+        const response = await fetch("https://voz-estudiantil-backend.onrender.com/reviews_with_names");
         if (!response.ok) throw new Error("Error al obtener los reviews");
         const data = await response.json();
         // Ordenar reseñas por la diferencia entre up_vote y down_vote
@@ -42,7 +44,7 @@ const ShowReviews = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/reviews/${reviewId}/votes`, {
+      const response = await fetch(`https://voz-estudiantil-backend.onrender.com/reviews/${reviewId}/votes`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +82,12 @@ const ShowReviews = () => {
   };
 
   const handleComments = (reviewId) => {
-    console.log(`Abrir sección de comentarios para el review ID: ${reviewId}`);
+    setSelectedReviewId(reviewId); // Guardar la reseña seleccionada
+    setShowModal(true); // Abrir el modal
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false); // Cerrar el modal
   };
 
   return (
@@ -179,7 +186,21 @@ const ShowReviews = () => {
         ))}
       </div>
 
-      <NotLoggedIn show={showModal} onClose={() => setShowModal(false)} />
+      {showModal && (
+        <ShowReviewCommentsModal
+          show={showModal}
+          onClose={handleCloseModal}
+          reviewId={selectedReviewId} // Pasar la reseña seleccionada
+        />
+      )}
+
+      {showModal && !isLoggedIn && (
+        <NotLoggedIn
+          show={showModal}
+          onClose={handleCloseModal}
+          actionMessage="Para votar, necesitas estar logueado."
+        />
+      )}
     </div>
   );
 };
