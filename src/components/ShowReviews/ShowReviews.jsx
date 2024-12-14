@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NotLoggedIn from "@/components/NotLoggedIn/NotLoggedIn";
+import ShowReviewCommentsModal from "@/components/ShowReviewCommentsModal/ShowReviewCommentsModal";
 
 const ShowReviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -7,6 +8,7 @@ const ShowReviews = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para saber si el usuario está logueado
   const [showModal, setShowModal] = useState(false); // Estado para mostrar el modal
   const [userVotes, setUserVotes] = useState({}); // Para almacenar el voto del usuario por reseña
+  const [selectedReviewId, setSelectedReviewId] = useState(null); // Reseña seleccionada para mostrar comentarios
 
   useEffect(() => {
     // Verificar si el usuario está logueado con el token de localStorage
@@ -80,7 +82,8 @@ const ShowReviews = () => {
   };
 
   const handleComments = (reviewId) => {
-    console.log(`Abrir sección de comentarios para el review ID: ${reviewId}`);
+    setSelectedReviewId(reviewId); // Guardar la reseña seleccionada
+    setShowModal(true); // Abrir el modal
   };
 
   const handleCloseModal = () => {
@@ -184,10 +187,18 @@ const ShowReviews = () => {
       </div>
 
       {showModal && (
-        <NotLoggedIn 
-          show={showModal} 
-          onClose={handleCloseModal} 
-          actionMessage="Para votar, necesitas estar logueado." 
+        <ShowReviewCommentsModal
+          show={showModal}
+          onClose={handleCloseModal}
+          reviewId={selectedReviewId} // Pasar la reseña seleccionada
+        />
+      )}
+
+      {showModal && !isLoggedIn && (
+        <NotLoggedIn
+          show={showModal}
+          onClose={handleCloseModal}
+          actionMessage="Para votar, necesitas estar logueado."
         />
       )}
     </div>
