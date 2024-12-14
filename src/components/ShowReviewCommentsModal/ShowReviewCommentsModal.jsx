@@ -10,7 +10,7 @@ const ShowReviewCommentsModal = ({ reviewId, show, onClose }) => {
       const fetchComments = async () => {
         try {
           setLoading(true);
-          const response = await fetch(`http://127.0.0.1:5000/comments-by-review?review_id=${reviewId}`);
+          const response = await fetch(`https://voz-estudiantil-backend.onrender.com/comments-by-review?review_id=${reviewId}`);
           if (!response.ok) throw new Error("Error al obtener los comentarios");
           const data = await response.json();
           setComments(data); // Actualizar el estado con los comentarios
