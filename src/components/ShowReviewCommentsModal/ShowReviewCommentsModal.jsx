@@ -56,7 +56,7 @@ const ShowReviewCommentsModal = ({ reviewId, show, onClose }) => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/comments", {
+      const response = await fetch("https://voz-estudiantil-backend.onrender.com/comments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
