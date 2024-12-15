@@ -51,8 +51,6 @@ function EventPage() {
       <h1 className="text-center mt-4 mb-3">Eventos Universitarios</h1>
       <p className="text-center mb-4">Explora los próximos eventos en tu universidad.</p>
 
-      {/* Contenedor de opciones */}
-      <OptionsContainer />
 
       {/* Botón flotante */}
       <div className={`${styles.floatingButtonContainer}`}>

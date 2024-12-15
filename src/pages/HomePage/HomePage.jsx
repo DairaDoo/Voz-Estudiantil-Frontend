@@ -31,7 +31,6 @@ function HomePage() {
   return (
     <div>
       {/* Contenedor de opciones */}
-      <OptionsContainer />
 
       {/* Contenedor de reseñas */}
       <ShowReviews />
