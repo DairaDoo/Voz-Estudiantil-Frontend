@@ -12,12 +12,10 @@ function ProfessorPage() {
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    // Cambiar el favicon al montar la página
     const favicon = document.querySelector("link[rel='icon']");
     const originalFavicon = favicon.href;
     favicon.href = "/logo-32x32.png"; // Ruta desde la carpeta public
 
-    // Restaurar el favicon original al desmontar el componente
     return () => {
       favicon.href = originalFavicon;
     };
@@ -73,7 +71,6 @@ function ProfessorPage() {
           setShowModal(false);
           setError("");
 
-          // Recargar los datos de profesores y preguntas
           fetch("http://127.0.0.1:5000/professors/all")
             .then((response) => response.json())
             .then((data) => setProfessors(data.professors))
@@ -88,7 +85,6 @@ function ProfessorPage() {
     });
   };
 
-  // Filtrar los profesores para eliminar duplicados
   const uniqueProfessors = Array.from(new Set(professors.map((a) => a.professor_id)))
     .map((id) => professors.find((a) => a.professor_id === id));
 
@@ -102,18 +98,16 @@ function ProfessorPage() {
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
         {uniqueProfessors.map((professor) => (
           <Col key={professor.professor_id}>
-            <div className="card shadow-lg rounded border-0 h-100">
+            <div className="card shadow-lg rounded border-0 h-100 hover-effect">
               <div className="card-body p-4">
                 <h5 className="card-title text-dark">{professor.name}</h5>
-                <p className="card-text">
-                  <strong>Calificación:</strong> {professor.overall_rating}
-                </p>
+                <p className="card-text"><strong>Calificación:</strong> {professor.overall_rating}</p>
                 <p><strong>Universidad:</strong> {professor.university_name}</p>
                 <p><strong>Campus:</strong> {professor.campus_name}</p>
                 <p><strong>Departamento:</strong> {professor.department_name}</p>
                 <Button
                   variant="primary"
-                  className="w-100 mt-3"
+                  className="w-100 mt-3 hover-button"
                   onClick={() => handleShowModal(professor.professor_id)}
                 >
                   Evaluar Profesor
@@ -136,16 +130,12 @@ function ProfessorPage() {
               <Form.Control
                 as="select"
                 value={answers[question.question_id] || ""}
-                onChange={(e) =>
-                  handleAnswerChange(question.question_id, parseInt(e.target.value))
-                }
-                className="mb-3"
+                onChange={(e) => handleAnswerChange(question.question_id, parseInt(e.target.value))}
+                className="mb-3 custom-select"
               >
                 <option value="">Selecciona una opción</option>
                 {[1, 2, 3, 4, 5].map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
+                  <option key={value} value={value}>{value}</option>
                 ))}
               </Form.Control>
             </Form.Group>

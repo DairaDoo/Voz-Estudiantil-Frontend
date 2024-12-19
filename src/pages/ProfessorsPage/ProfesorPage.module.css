@@ -1,51 +1,50 @@
-/* Card styling */
 .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out !important;
+}
+
+.card:hover {
+  transform: translateY(-10px) !important;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.hover-effect {
+  border-radius: 10px !important;
+}
+
+.hover-button {
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out !important;
+}
+
+.hover-button:hover {
+  background-color: #0056b3 !important;
+  transform: scale(1.05) !important;
+}
+
+.custom-select {
+  font-size: 16px !important;
+  padding: 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid #ccc !important;
+}
+
+.custom-select:focus {
+  border-color: #007bff !important;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5) !important;
+}
+
+.alert {
+  transition: opacity 0.5s ease-in-out !important;
+}
+
+.animated {
+  animation: fadeIn 0.5s ease-in-out !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0 !important;
   }
-  
-  .card:hover {
-    transform: translateY(-10px) !important;
-    box-shadow: 0 8px 16px rgba t(0, 0, 0, 0.1) !important;
+  100% {
+    opacity: 1 !important;
   }
-  
-  /* Modal styling */
-  .modal-content {
-    border-radius: 10px !important;
-  }
-  
-  .modal-header, .modal-footer {
-    background-color: #f8f9fa !important;
-  }
-  
-  .modal-body {
-    padding: 1.5rem !important;
-  }
-  
-  /* Button styles */
-  button {
-    font-weight: bold !important;
-    transition: background-color 0.3s ease, transform 0.2s ease !important;
-  }
-  
-  button:hover {
-    background-color: #0056b3 !important;
-    transform: scale(1.05) !important;
-  }
-  
-  /* Alert styles */
-  .alert {
-    font-size: 1.1rem !important;
-    margin-bottom: 15px !important;
-    transition: opacity 0.3s ease-in-out !important;
-  }
-  
-  /* Animations */
-  .animated {
-    animation: fadeIn 1s ease-in-out !important;
-  }
-  
-  @keyframes fadeIn {
-    0% { opacity: 0 !important;} 
-    100% { opacity: 1 !important; }
-  }
-  
+}
