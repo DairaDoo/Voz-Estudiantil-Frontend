@@ -11,7 +11,7 @@ function PostEvent({ onClose }) {
   const [universityId, setUniversityId] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  const apiUrl = "http://localhost:5000"; // URL de la API con puerto 5000
+  const apiUrl = "http://127.0.0.1:5000"; // URL de la API con puerto 5000
   const MAX_DESCRIPTION_LENGTH = 1500;
 
   useEffect(() => {

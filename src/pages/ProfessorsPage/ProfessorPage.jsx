@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Form, Modal, Alert } from "react-bootstrap";
-import './ProfesorPage.module.css'; // Archivo CSS para los estilos
+import { FaUniversity, FaBuilding, FaChalkboardTeacher } from "react-icons/fa";
+import StarRating from "@/components/StarRating/StarRating";
 
 function ProfessorPage() {
   const [professors, setProfessors] = useState([]);
@@ -10,16 +11,6 @@ function ProfessorPage() {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
-
-  useEffect(() => {
-    const favicon = document.querySelector("link[rel='icon']");
-    const originalFavicon = favicon.href;
-    favicon.href = "/logo-32x32.png"; // Ruta desde la carpeta public
-
-    return () => {
-      favicon.href = originalFavicon;
-    };
-  }, []);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/professors/all")
@@ -65,7 +56,6 @@ function ProfessorPage() {
           answer: answers[question.question_id],
         }),
       })
-        .then((response) => response.json())
         .then(() => {
           setSuccessMessage("Gracias por evaluar al profesor.");
           setShowModal(false);
@@ -90,24 +80,82 @@ function ProfessorPage() {
 
   return (
     <Container className="my-5">
+      <style>
+        {`
+          .card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            background-color: #f7f9fc;
+            border: 2px solid #007bff;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .card:hover {
+            transform: translateY(-8px);
+            border-color: #0056b3;
+          }
+          .card-header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+          .card-body {
+            padding: 20px;
+            flex-grow: 1;
+          }
+          .icon-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            color: #6c757d;
+          }
+          .icon-text svg {
+            color: #007bff;
+          }
+          .btn-primary {
+            background-color: #007bff;
+            border: none;
+            transition: all 0.3s;
+          }
+          .btn-primary:hover {
+            background-color: #0056b3;
+          }
+        `}
+      </style>
+
       <h1 className="text-center text-primary mb-4">Lista de Profesores</h1>
 
-      {error && <Alert variant="danger" className="animated fadeIn">{error}</Alert>}
-      {successMessage && <Alert variant="success" className="animated fadeIn">{successMessage}</Alert>}
+      {error && <Alert variant="danger">{error}</Alert>}
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
 
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
         {uniqueProfessors.map((professor) => (
           <Col key={professor.professor_id}>
-            <div className="card shadow-lg rounded border-0 h-100 hover-effect">
-              <div className="card-body p-4">
-                <h5 className="card-title text-dark">{professor.name}</h5>
-                <p className="card-text"><strong>Calificación:</strong> {professor.overall_rating}</p>
-                <p><strong>Universidad:</strong> {professor.university_name}</p>
-                <p><strong>Campus:</strong> {professor.campus_name}</p>
-                <p><strong>Departamento:</strong> {professor.department_name}</p>
+            <div className="card">
+              <div className="card-header">{professor.name}</div>
+              <div className="card-body">
+                <StarRating rating={professor.overall_rating} />
+                <div className="icon-text mt-3">
+                  <FaUniversity />
+                  {professor.university_name}
+                </div>
+                <div className="icon-text">
+                  <FaBuilding />
+                  {professor.campus_name}
+                </div>
+                <div className="icon-text">
+                  <FaChalkboardTeacher />
+                  {professor.department_name}
+                </div>
                 <Button
-                  variant="primary"
-                  className="w-100 mt-3 hover-button"
+                  className="mt-3 w-100"
                   onClick={() => handleShowModal(professor.professor_id)}
                 >
                   Evaluar Profesor
@@ -118,20 +166,18 @@ function ProfessorPage() {
         ))}
       </Row>
 
-      {/* Modal para las preguntas */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
           <Modal.Title>Evaluar Profesor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {questions.map((question) => (
-            <Form.Group key={question.question_id} controlId={`question-${question.question_id}`}>
+            <Form.Group key={question.question_id}>
               <Form.Label>{question.question_text}</Form.Label>
               <Form.Control
                 as="select"
                 value={answers[question.question_id] || ""}
                 onChange={(e) => handleAnswerChange(question.question_id, parseInt(e.target.value))}
-                className="mb-3 custom-select"
               >
                 <option value="">Selecciona una opción</option>
                 {[1, 2, 3, 4, 5].map((value) => (
@@ -142,12 +188,8 @@ function ProfessorPage() {
           ))}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cerrar
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Enviar Respuestas
-          </Button>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Cerrar</Button>
+          <Button variant="primary" onClick={handleSubmit}>Enviar Respuestas</Button>
         </Modal.Footer>
       </Modal>
     </Container>

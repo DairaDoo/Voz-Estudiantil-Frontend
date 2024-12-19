@@ -1,14 +1,129 @@
-/* Asegúrate de que el botón esté siempre a la derecha de la pantalla y por encima del contenido */
-.floatingButtonContainer {
-    position: fixed;
-    bottom: 20px; /* Ajusta la distancia desde el borde inferior */
-    right: 20px;  /* Ajusta la distancia desde el borde derecho */
-    z-index: 1050; /* Asegúrate de que el botón esté por encima de otros contenidos */
+/* Estilo para las tarjetas de evento */
+.card {
+  border: 2px solid #bdc3c7; /* Borde más sutil con un gris suave */
+  border-radius: 12px; /* Redondear las esquinas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff; /* Fondo blanco para las tarjetas */
+  margin: 0 auto; /* Centramos las tarjetas dentro de su contenedor */
+}
+
+/* Centralizar las tarjetas en el contenedor */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Aseguramos que las tarjetas se centren en la fila */
+  gap: 20px; /* Espacio entre las tarjetas */
+}
+
+/* Estilo para el cuerpo de la tarjeta */
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  height: 100%;
+  overflow: hidden; /* Evita que el contenido se desborde */
+}
+
+/* Estilo para el título de la tarjeta */
+.cardTitle {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Estilo para la descripción de la tarjeta */
+.cardText {
+  font-size: 1.1rem; /* Aumentamos el tamaño de la descripción */
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  color: #34495e; /* Color más oscuro para mejorar la legibilidad */
+  font-weight: 500; /* Resaltar un poco más el texto */
+  max-height: 120px; /* Limitar la altura de la descripción */
+  overflow: hidden; /* Ocultar el contenido que no cabe */
+  text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto se corta */
+  line-height: 1.6; /* Mejora la legibilidad */
+}
+
+/* Estilo para el "ver más" */
+.cardText.expandable {
+  max-height: none; /* Permite expandir el texto cuando se hace clic */
+  overflow: visible;
+}
+
+/* Estilo para el botón "Ver más" */
+.expandButton {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3498db; /* Color llamativo (azul) */
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: all 0.3s ease; /* Transición suave al hacer hover */
+}
+
+/* Estilo al hacer hover en el botón "Ver más" */
+.expandButton:hover {
+  color: #2980b9; /* Azul más oscuro al pasar el ratón */
+  text-decoration: none; /* Quitar subrayado en hover para mejor efecto */
+  transform: scale(1.1); /* Efecto de agrandado */
+}
+
+/* Estilo al hacer click en el botón "Ver más" */
+.expandButton:focus {
+  outline: none; /* Eliminar el borde de enfoque */
+}
+
+/* Agregar un ícono al lado del botón (opcional) */
+.expandButton::before {
+  content: '\2193'; /* Flecha hacia abajo (símbolo de expansión) */
+  margin-right: 5px;
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+/* Cuando el evento está expandido, cambiar la flecha a hacia arriba */
+.expandButton.expanded::before {
+  content: '\2191'; /* Flecha hacia arriba */
+}
+
+/* Estilo para las imágenes dentro de las tarjetas */
+.cardImage {
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease; /* Efecto de zoom cuando se pasa el mouse */
+}
+
+/* Efecto de zoom en la imagen al pasar el mouse */
+.cardImage:hover {
+  transform: scale(1.05); /* Efecto de zoom cuando se pasa el mouse */
+}
+
+/* Estilos para el contenedor de imágenes sin imagen */
+.noImageContainer {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #ecf0f1; /* Fondo más suave para el contenedor sin imagen */
+  color: #95a5a6;
+}
+
+/* Espaciado entre las tarjetas en pantallas grandes */
+@media (min-width: 992px) {
+  .row {
+    gap: 30px; /* Aumentamos el espacio entre las tarjetas */
+    padding-left: 20px; /* Añadimos un poco de espacio a la izquierda */
+    padding-right: 20px; /* Añadimos un poco de espacio a la derecha */
   }
-  
-  /* Agregar algún espacio extra si lo deseas */
-  .floatingButtonContainer .btn {
-    position: relative;
-    z-index: 1051; /* Para asegurarse que el botón esté por encima del overlay */
-  }
-  
+}
