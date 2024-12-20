@@ -11,8 +11,17 @@ function ProfessorPage() {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
+  const [showAuthAlert, setShowAuthAlert] = useState(false); // Alerta para usuarios no autenticados
 
   useEffect(() => {
+    // Lógica de verificación de autenticación. Puedes sustituirlo por tu lógica real.
+    const authStatus = localStorage.getItem("token"); // Simulación de autenticación
+    if (authStatus != null) {
+      setIsAuthenticated(true);
+    }
+
+    // Obtener los datos de los profesores y las preguntas
     fetch("http://127.0.0.1:5000/professors/all")
       .then((response) => response.json())
       .then((data) => setProfessors(data.professors))
@@ -25,6 +34,11 @@ function ProfessorPage() {
   }, []);
 
   const handleShowModal = (professorId) => {
+    if (!isAuthenticated) {
+      setShowAuthAlert(true); // Muestra la alerta si no está autenticado
+      return;
+    }
+
     setSelectedProfessor(professorId);
     setShowModal(true);
     setAnswers({});
@@ -134,6 +148,13 @@ function ProfessorPage() {
 
       {error && <Alert variant="danger">{error}</Alert>}
       {successMessage && <Alert variant="success">{successMessage}</Alert>}
+
+      {/* Mostrar alerta solo si no está autenticado */}
+      {showAuthAlert && !isAuthenticated && (
+        <Alert variant="warning" onClose={() => setShowAuthAlert(false)} dismissible>
+          <strong>¡Necesitas iniciar sesión!</strong> Para poder evaluar a los profesores, debes estar autenticado.
+        </Alert>
+      )}
 
       <Row xs={1} sm={2} md={3} lg={4} className="g-4">
         {uniqueProfessors.map((professor) => (
